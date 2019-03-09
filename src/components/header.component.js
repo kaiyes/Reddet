@@ -1,0 +1,33 @@
+import React, { Component } from 'react'
+import { Text, View } from 'react-native'
+import { Icon } from 'react-native-elements'
+import styles from '../utils/styles/header.style'
+
+class Header extends Component {
+  render() {
+    return (
+      <View style={styles.header}>
+        <Icon
+          name="menu"
+          type="material-community"
+          color="#000000"
+          onPress={this.props.onMenuPress}
+          containerStyle={styles.menuIcon}
+        />
+        <Text style={styles.headerText}>Socio</Text>
+
+        <Icon
+          name="person"
+          reverse
+          size={10}
+          type=" ionicon"
+          color="#000000"
+          onPress={this.props.onProfilePress}
+          containerStyle={styles.profileIcon}
+        />
+      </View>
+    )
+  }
+}
+
+export default Header
