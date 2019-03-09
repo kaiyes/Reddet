@@ -15,16 +15,6 @@ class Header extends Component {
           containerStyle={styles.menuIcon}
         />
         <Text style={styles.headerText}>Socio</Text>
-
-        <Icon
-          name="person"
-          reverse
-          size={10}
-          type=" ionicon"
-          color="#000000"
-          onPress={this.props.onProfilePress}
-          containerStyle={styles.profileIcon}
-        />
       </View>
     )
   }

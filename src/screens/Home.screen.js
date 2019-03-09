@@ -4,7 +4,6 @@ import {
   Text,
   View,
   ActivityIndicator,
-  ScrollView,
   TouchableOpacity,
   FlatList,
   AsyncStorage,
@@ -25,6 +24,7 @@ import _ from 'lodash'
 
 import styles from '../utils/styles/homeFeed.style'
 import Header from '../components/header.component'
+import Colors from '../utils/Colors'
 
 class HomeFeedScreen extends Component {
   state = {
@@ -43,6 +43,8 @@ class HomeFeedScreen extends Component {
     searched: false,
     pics: {},
     tribeResult: [],
+    postTitle:
+      'From Software Has Made sekiro which is about to come out in 2 weeks, Cant wait',
   }
 
   render() {
@@ -57,8 +59,9 @@ class HomeFeedScreen extends Component {
       content,
       searched,
       pics,
+      postTitle,
     } = this.state
-
+    const { navigate } = this.props.navigation
     return (
       <View style={styles.container}>
         <Header
@@ -70,93 +73,85 @@ class HomeFeedScreen extends Component {
           }}
         />
 
-        <View style={styles.secondContainer}>
-          <View style={styles.postContainer}>
-            <FlatList
-              data={[1, 2]}
-              ItemSeparatorComponent={() => (
-                <View style={styles.separator} />
-              )}
-              ItemSeparatorComponent={() => (
-                <View style={styles.separator} />
-              )}
-              onEndReachedThreshold={0.6}
-              renderItem={() => (
-                <View style={styles.post}>
-                  <View style={styles.leftColumn}>
-                    <TouchableOpacity>
-                      <Icon
-                        name="menu-up"
-                        type="material-community"
-                        color="#d8d8d8"
-                      />
-                    </TouchableOpacity>
-
-                    <Text style={styles.voteText}>12</Text>
-
-                    <TouchableOpacity>
-                      <Icon
-                        name="menu-down"
-                        type="material-community"
-                        color="#d8d8d8"
-                      />
-                    </TouchableOpacity>
-                  </View>
-                  <View style={styles.rightColumn}>
-                    <View style={styles.postTitleContainer}>
-                      <Image
-                        style={styles.image}
-                        source={{
-                          uri:
-                            'https://facebook.github.io/react-native/docs/assets/favicon.png',
-                        }}
-                      />
-                      <View style={styles.titleHolder}>
-                        <Text style={styles.tribeText}>
-                          kaiyes
-                        </Text>
-                        <Text style={styles.postTitle}>
-                          Crypto wipeout deepens to $640
-                          Billion as Ether leads declines
-                        </Text>
-                      </View>
-                    </View>
-                    <View style={styles.bottomContainer}>
-                      <Text style={styles.timeText}>
-                        Posted 2 min ago
-                      </Text>
-                      <View style={styles.iconContainer}>
-                        <TouchableOpacity
-                          onPress={() =>
-                            console.log('hello')
-                          }
-                        >
-                          <Icon
-                            name="comment"
-                            type="font-awesome"
-                            color="#cccccc"
-                            size={14}
-                            color="black"
-                            reverse
-                          />
-                        </TouchableOpacity>
-                        <TouchableOpacity>
-                          <Icon
-                            name="bookmark"
-                            type="font-awesome"
-                            color="#cccccc"
-                            size={14}
-                            color="black"
-                            reverse
-                          />
-                        </TouchableOpacity>
-                      </View>
-                    </View>
-                  </View>
+        <View style={styles.postContainer}>
+          <FlatList
+            data={[1, 2]}
+            ItemSeparatorComponent={() => (
+              <View style={styles.separator} />
+            )}
+            ItemSeparatorComponent={() => (
+              <View style={styles.separator} />
+            )}
+            onEndReachedThreshold={0.6}
+            renderItem={() => (
+              <View style={styles.post}>
+                <View style={styles.leftColumn}>
+                  <TouchableOpacity>
+                    <Icon
+                      name="caretup"
+                      type="antdesign"
+                      color={Colors.black}
+                      size={10}
+                      reverse
+                    />
+                  </TouchableOpacity>
+                  <Text style={styles.voteText}>12</Text>
+                  <TouchableOpacity>
+                    <Icon
+                      name="caretdown"
+                      type="antdesign"
+                      color={Colors.black}
+                      size={10}
+                      reverse
+                    />
+                  </TouchableOpacity>
                 </View>
-              )}
-            />
-          </View>
+                <View style={styles.rightColumn}>
+                  <View style={styles.postTitleContainer}>
+                    <Image
+                      style={styles.image}
+                      source={{
+                        uri:
+                          'https://speckyboy.com/wp-content/uploads/2014/07/flat_web_design_13.jpg',
+                      }}
+                    />
+                    <View>
+                      <Text
+                        style={styles.postTitle}
+                        onPress={() => {
+                          navigate('PostDetail')
+                        }}
+                      >
+                        {postTitle.length > 60
+                          ? `${postTitle
+                              .toString()
+                              .substr(0, 50)}...`
+                          : postTitle}
+                      </Text>
+                      <View style={styles.timeUserTribe}>
+                        <Avatar
+                          rounded
+                          source={{
+                            uri:
+                              'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+                          }}
+                          activeOpacity={0.7}
+                          containerStyle={styles.avatar}
+                        />
+                        <Text style={styles.timeText}>
+                          2 min ago{' '}
+                          <Text style={styles.subReddit}>
+                            u/Keyboard
+                          </Text>
+                        </Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={styles.bottomContainer} />
+                </View>
+              </View>
+            )}
+          />
         </View>
       </View>
     )

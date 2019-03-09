@@ -5,6 +5,6 @@ export default {
   lightBlack: '#283338',
   grey: '#F5F3F5',
   lightGrey: '#5D5D5D',
-  primary: '#FFCE7D',
+  primary: 'rgb(105, 221, 144)',
   moderateYellow: '#E6DED8',
 }

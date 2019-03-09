@@ -12,13 +12,15 @@ export default StyleSheet.create({
     width: wp('100%'),
     backgroundColor: Colors.primary,
     flexDirection: 'row',
-    justifyContent: 'space-between',
+    justifyContent: 'flex-start',
     alignItems: 'center',
   },
   headerText: {
-    fontSize: 14,
-    color: '#000000',
+    fontSize: 16,
+    color: Colors.lightBlack,
+    fontWeight: 'bold',
     letterSpacing: wp('1.7%'),
+    marginLeft: wp('32%'),
   },
   profileIcon: {
     marginRight: wp('2.5%'),
