@@ -7,314 +7,153 @@ import {
   ScrollView,
   TouchableOpacity,
   FlatList,
-  TouchableHighlight,
+  AsyncStorage,
+  Clipboard,
+  TextInput,
+  KeyboardAvoidingView,
+  Keyboard,
+  Modal,
+  Image,
 } from 'react-native'
 import {
   Avatar,
   Icon,
   Divider,
+  Button,
 } from 'react-native-elements'
-import {
-  Menu,
-  MenuOptions,
-  MenuOption,
-  MenuTrigger,
-} from 'react-native-popup-menu'
-import Swipeable from 'react-native-swipeable'
 import _ from 'lodash'
 
-import Header from '../components/header.component'
 import styles from '../utils/styles/homeFeed.style'
+import Header from '../components/header.component'
 
-export default class AltHomeFeedScreen extends Component {
+class HomeFeedScreen extends Component {
   state = {
-    list: [1, 2, 3, 4, 5, 6, 3, 3, 3, 3, 3, 3, 3, 3],
-    pills: [
-      'Anime',
-      'Religion',
-      'Politics',
-      'Protests',
-      'Saitama',
-      'Shingeki no kyojin',
-      'One punch Man',
-      'Graphics',
-      'Tech',
-    ],
-  }
-  _drawerToggle = () => {
-    this.props.navigation.toggleDrawer()
+    isModalVisible: false,
+    text: '',
+    reportId: '',
+    reasonForReporting: '',
+    isSecondModalVisible: false,
+    title: '',
+    excerpt: '',
+    tags: [],
+    alter: false,
+    tribe: '',
+    tribeId: '',
+    content: '',
+    searched: false,
+    pics: {},
+    tribeResult: [],
   }
 
   render() {
-    const { list, pills } = this.state
-    const { navigate } = this.props.navigation
-    const rightButtons = [
-      <View style={styles.swipedButtons}>
-        <TouchableHighlight
-          style={styles.swipedInnerContainerOne}
-        >
-          <Icon
-            name="comment"
-            type="font-awesome"
-            color="#cccccc"
-            size={19}
-            color="black"
-            reverse
-            onPress={() => console.log('hello')}
-          />
-        </TouchableHighlight>
-      </View>,
-      <View style={styles.swipedButtons}>
-        <TouchableHighlight
-          style={styles.swipedInnerContainer}
-        >
-          <Icon
-            name="bookmark"
-            type="font-awesome"
-            color="#cccccc"
-            size={19}
-            color="black"
-            reverse
-          />
-        </TouchableHighlight>
-      </View>,
-      <View style={styles.swipedButtons}>
-        <TouchableHighlight
-          style={styles.swipedInnerContainer}
-        >
-          <Icon
-            name="share-alt"
-            type="font-awesome"
-            color="#cccccc"
-            size={19}
-            color="black"
-            reverse
-            onPress={() => console.log('hello')}
-          />
-        </TouchableHighlight>
-      </View>,
-    ]
+    const {
+      title,
+      excerpt,
+      tags,
+      alter,
+      tribe,
+      tribeId,
+      tribeResult,
+      content,
+      searched,
+      pics,
+    } = this.state
+
     return (
       <View style={styles.container}>
-        <Header onMenuPress={this._drawerToggle} />
-        <View style={styles.secondContainer}>
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-            contentContainerStyle={styles.scrollview}
-          >
-            {pills.map((item, index) => {
-              return (
-                <TouchableOpacity style={styles.tribePill}>
-                  <Text style={styles.pillText}>
-                    {item}
-                  </Text>
-                </TouchableOpacity>
-              )
-            })}
-          </ScrollView>
+        <Header
+          onMenuPress={() => {
+            this.props.navigation.toggleDrawer()
+          }}
+          onProfilePress={async () => {
+            console.log('profilePressed')
+          }}
+        />
 
+        <View style={styles.secondContainer}>
           <View style={styles.postContainer}>
             <FlatList
-              data={this.state.list}
-              keyExtractor={item => item._id}
+              data={[1, 2]}
               ItemSeparatorComponent={() => (
                 <View style={styles.separator} />
               )}
-              renderItem={({ item }) => (
-                <Swipeable
-                  key={item._id}
-                  rightButtons={rightButtons}
-                >
-                  <View style={styles.post}>
-                    <View style={styles.leftColumn}>
+              ItemSeparatorComponent={() => (
+                <View style={styles.separator} />
+              )}
+              onEndReachedThreshold={0.6}
+              renderItem={() => (
+                <View style={styles.post}>
+                  <View style={styles.leftColumn}>
+                    <TouchableOpacity>
                       <Icon
                         name="menu-up"
                         type="material-community"
                         color="#d8d8d8"
                       />
-                      <Text style={styles.voteText}>
-                        88
-                      </Text>
+                    </TouchableOpacity>
+
+                    <Text style={styles.voteText}>12</Text>
+
+                    <TouchableOpacity>
                       <Icon
                         name="menu-down"
                         type="material-community"
                         color="#d8d8d8"
                       />
-                    </View>
-                    <View style={styles.rightColumn}>
-                      <View style={styles.postTitle}>
-                        <Text
-                          style={styles.postText}
-                          onPress={() => {
-                            navigate('PostDetail')
-                          }}
-                        >
-                          Gtx 1180 cards will be launching
-                          this august, should you wait for
-                          the next gen or buy now ?
+                    </TouchableOpacity>
+                  </View>
+                  <View style={styles.rightColumn}>
+                    <View style={styles.postTitleContainer}>
+                      <Image
+                        style={styles.image}
+                        source={{
+                          uri:
+                            'https://facebook.github.io/react-native/docs/assets/favicon.png',
+                        }}
+                      />
+                      <View style={styles.titleHolder}>
+                        <Text style={styles.tribeText}>
+                          kaiyes
                         </Text>
-                        <View>
-                          <Menu>
-                            <MenuTrigger>
-                              <Icon
-                                name="dots-three-vertical"
-                                type="entypo"
-                                color="#d8d8d8"
-                                size={16}
-                              />
-                            </MenuTrigger>
-                            <MenuOptions>
-                              <MenuOption
-                                onSelect={() =>
-                                  console.log('saved')
-                                }
-                              >
-                                <View style={styles.row}>
-                                  <Icon
-                                    name="pencil"
-                                    type="evilicon"
-                                    color="black"
-                                    reverse
-                                    size={16}
-                                  />
-                                  <Text
-                                    style={
-                                      styles.menuOptionText
-                                    }
-                                  >
-                                    Edit My post
-                                  </Text>
-                                </View>
-                              </MenuOption>
-                              <MenuOption
-                                onSelect={() =>
-                                  console.log('saved')
-                                }
-                              >
-                                <View style={styles.row}>
-                                  <Icon
-                                    name="delete"
-                                    type="material-community"
-                                    color="black"
-                                    reverse
-                                    size={16}
-                                  />
-                                  <Text
-                                    style={
-                                      styles.menuOptionText
-                                    }
-                                  >
-                                    Delete My post
-                                  </Text>
-                                </View>
-                              </MenuOption>
-                              <MenuOption
-                                onSelect={() =>
-                                  console.log('saved')
-                                }
-                              >
-                                <View style={styles.row}>
-                                  <Icon
-                                    name="link"
-                                    type="entypo"
-                                    color="black"
-                                    reverse
-                                    size={16}
-                                  />
-                                  <Text
-                                    style={
-                                      styles.menuOptionText
-                                    }
-                                  >
-                                    Permalink
-                                  </Text>
-                                </View>
-                              </MenuOption>
-                              <MenuOption
-                                onSelect={() =>
-                                  console.log('saved')
-                                }
-                              >
-                                <View style={styles.row}>
-                                  <Icon
-                                    name="md-person"
-                                    type="ionicon"
-                                    color="black"
-                                    reverse
-                                    size={16}
-                                  />
-                                  <Text
-                                    style={
-                                      styles.menuOptionText
-                                    }
-                                  >
-                                    Pablo's Profile
-                                  </Text>
-                                </View>
-                              </MenuOption>
-                              <MenuOption
-                                onSelect={() =>
-                                  console.log('saved')
-                                }
-                              >
-                                <View style={styles.row}>
-                                  <Icon
-                                    name="flag"
-                                    type="font-awesome"
-                                    color="black"
-                                    reverse
-                                    size={16}
-                                  />
-                                  <Text
-                                    style={
-                                      styles.menuOptionText
-                                    }
-                                  >
-                                    Report Post
-                                  </Text>
-                                </View>
-                              </MenuOption>
-                            </MenuOptions>
-                          </Menu>
-                        </View>
+                        <Text style={styles.postTitle}>
+                          Crypto wipeout deepens to $640
+                          Billion as Ether leads declines
+                        </Text>
                       </View>
-                      <View style={styles.userInfo}>
-                        <Avatar
-                          small
-                          rounded
-                          source={{
-                            uri:
-                              'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-                          }}
-                          activeOpacity={0.7}
-                        />
-                        <View style={styles.nameHolder}>
-                          <View style={styles.row}>
-                            <Text style={styles.authorText}>
-                              Katie
-                            </Text>
-                            <View style={styles.badge}>
-                              <Text
-                                style={styles.badgeText}
-                              >
-                                323
-                              </Text>
-                            </View>
-                          </View>
-                          <View style={styles.row}>
-                            <Text style={styles.timeText}>
-                              Posted 3 hours ago in
-                            </Text>
-                            <Text style={styles.tribeText}>
-                              Tribe
-                            </Text>
-                          </View>
-                        </View>
+                    </View>
+                    <View style={styles.bottomContainer}>
+                      <Text style={styles.timeText}>
+                        Posted 2 min ago
+                      </Text>
+                      <View style={styles.iconContainer}>
+                        <TouchableOpacity
+                          onPress={() =>
+                            console.log('hello')
+                          }
+                        >
+                          <Icon
+                            name="comment"
+                            type="font-awesome"
+                            color="#cccccc"
+                            size={14}
+                            color="black"
+                            reverse
+                          />
+                        </TouchableOpacity>
+                        <TouchableOpacity>
+                          <Icon
+                            name="bookmark"
+                            type="font-awesome"
+                            color="#cccccc"
+                            size={14}
+                            color="black"
+                            reverse
+                          />
+                        </TouchableOpacity>
                       </View>
                     </View>
                   </View>
-                </Swipeable>
+                </View>
               )}
             />
           </View>
@@ -323,3 +162,4 @@ export default class AltHomeFeedScreen extends Component {
     )
   }
 }
+export default HomeFeedScreen

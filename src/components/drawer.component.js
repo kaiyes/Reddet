@@ -13,7 +13,6 @@ import {
   Icon,
   SearchBar,
 } from 'react-native-elements'
-import Collapsible from 'react-native-collapsible'
 
 import styles from '../utils/styles/drawer.style'
 
@@ -21,14 +20,7 @@ class Drawer extends Component {
   state = {
     searchText: '',
     touched: false,
-    isCollapsed: true,
-  }
-
-  _toggleTribes = async () => {
-    await this.setState({
-      isCollapsed: !this.state.isCollapsed,
-    })
-    console.log(this.state.isCollapsed)
+    tribes: [1, 2, 3, 5],
   }
 
   _deleteTribe = () => {
@@ -36,43 +28,19 @@ class Drawer extends Component {
   }
 
   render() {
-    const { searchText, touched, isCollapsed } = this.state
+    const { searchText, tribes } = this.state
     const { navigate } = this.props.navigation
 
     return (
       <ScrollView style={styles.container}>
         <View style={styles.secondContainer}>
-          <View style={styles.searchBox}>
-            <SearchBar
-              onChangeText={text =>
-                this.setState({
-                  searchText: text,
-                })
-              }
-              onClearText={() => {
-                this.setState({
-                  searchText: '',
-                })
-              }}
-              icon={{
-                type: 'font-awesome',
-                name: 'search',
-                color: 'white',
-              }}
-              placeholder="Search"
-              containerStyle={styles.searchBar}
-              clearIcon
-              inputStyle={styles.inputText}
-              value={searchText}
-            />
-          </View>
-
           <View style={styles.userBox}>
             <Avatar
               small
               rounded
               source={{
-                uri: '',
+                uri:
+                  'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
               }}
               onPress={() => console.log('Works!')}
               activeOpacity={0.7}
@@ -120,112 +88,9 @@ class Drawer extends Component {
             </View>
           </View>
 
-          <View style={styles.line} />
-          <View style={styles.verticalGap} />
-          <View style={styles.settingsContainer}>
-            <View style={styles.settingsRow}>
-              <Icon
-                name="cog"
-                type="font-awesome"
-                color="#ffffff"
-                size={18}
-              />
-              <Text
-                style={styles.settingsText}
-                onPress={() => {
-                  navigate('Settings')
-                }}
-              >
-                Settings
-              </Text>
-            </View>
-            <View style={styles.settingsRow}>
-              <Icon
-                name="wallet"
-                type="entypo"
-                color="#ffffff"
-                size={18}
-              />
-              <Text
-                style={styles.settingsText}
-                onPress={() => {
-                  navigate('Wallet')
-                }}
-              >
-                My Wallet
-              </Text>
-              <View style={styles.horizontalGap} />
-              <View style={styles.badge}>
-                <View style={styles.innerBadge}>
-                  <Text style={styles.badgeText}>
-                    1,235,881
-                  </Text>
-                </View>
-              </View>
-            </View>
-            <View style={styles.settingsRow}>
-              <Icon
-                name="bell"
-                type="font-awesome"
-                color="#ffffff"
-                size={18}
-              />
-              <Text
-                style={styles.settingsText}
-                onPress={() => {
-                  navigate('Notifications')
-                }}
-              >
-                Notifications
-              </Text>
-              <View style={styles.horizontalGap} />
-              <View style={styles.firstBadge}>
-                <View style={styles.innerBadge}>
-                  <Text style={styles.badgeText}>3</Text>
-                </View>
-              </View>
-            </View>
-            <View style={styles.settingsRow}>
-              <Icon
-                name="bookmark"
-                type="font-awesome"
-                color="#ffffff"
-                size={18}
-              />
-              <Text
-                style={styles.settingsText}
-                onPress={() => {
-                  navigate('Bookmarks')
-                }}
-              >
-                Bookmarks
-              </Text>
-            </View>
-          </View>
-          <View style={styles.line} />
-
           <View style={styles.tribeContainer}>
-            <View style={styles.tribeHeader}>
-              <TouchableOpacity
-                onPress={() => {
-                  this._toggleTribes()
-                }}
-              >
-                <Icon
-                  name="menu-down"
-                  type="material-community"
-                  color="#ffffff"
-                  size={18}
-                />
-              </TouchableOpacity>
-              <Text style={styles.tribeText}>
-                My Tribes
-              </Text>
-              <Text style={styles.editText}>Edit</Text>
-            </View>
-
-            <Collapsible collapsed={isCollapsed}>
-              <View style={styles.tribeRow}>
+            {tribes.map(() => {
+              ;<View style={styles.tribeRow}>
                 <View style={styles.blackBadge}>
                   <View style={styles.innerBadge}>
                     <Text style={styles.badgeText}>12</Text>
@@ -235,21 +100,7 @@ class Drawer extends Component {
                   sicily
                 </Text>
               </View>
-            </Collapsible>
-
-            <View style={styles.findMoreContainer}>
-              <Icon
-                name="plus"
-                type="entypo"
-                color="#ffffff"
-                size={15}
-                onPress={this._deleteTribe}
-              />
-              <Text style={styles.findMoreText}>
-                Find more tribes
-              </Text>
-            </View>
-            <View style={styles.line} />
+            })}
           </View>
         </View>
       </ScrollView>
@@ -257,3 +108,29 @@ class Drawer extends Component {
   }
 }
 export default Drawer
+
+// <View style={styles.searchBox}>
+//   <SearchBar
+//     onChangeText={text =>
+//       this.setState({
+//         searchText: text,
+//       })
+//     }
+//     onClearText={() => {
+//       this.setState({
+//         searchText: '',
+//       })
+//     }}
+//     icon={{
+//       type: 'font-awesome',
+//       name: 'search',
+//       color: 'white',
+//     }}
+//     placeholder="Search"
+//     containerStyle={styles.searchBar}
+//     clearIcon
+//     inputStyle={styles.inputText}
+//     value={searchText}
+//   />
+//
+// </View>
