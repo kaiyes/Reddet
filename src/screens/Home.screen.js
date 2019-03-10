@@ -84,9 +84,10 @@ class HomeFeedScreen extends Component {
     })
     this.setState({ postData: newVote })
   }
+
   _subRedditBelow = async () => {
     await this.setState({
-      down: !down,
+      down: !this.state.down,
     })
   }
 
@@ -209,7 +210,7 @@ class HomeFeedScreen extends Component {
                           </TouchableOpacity>
                           <TouchableOpacity
                             onPress={() => {
-                              console.log('text')
+                              this._subRedditBelow()
                             }}
                           >
                             <Text style={styles.subReddit}>
@@ -268,7 +269,7 @@ class HomeFeedScreen extends Component {
                           </TouchableOpacity>
                           <TouchableOpacity
                             onPress={() => {
-                              console.log('text')
+                              this._subRedditBelow()
                             }}
                           >
                             <Text style={styles.subReddit}>
