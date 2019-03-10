@@ -15,10 +15,10 @@ export default StyleSheet.create({
   },
   separator: {
     width: wp('98%'),
-    height: hp('.5%'),
+    height: hp('1%'),
   },
   post: {
-    backgroundColor: '#ffffff',
+    backgroundColor: Colors.white,
     flexDirection: 'row',
     borderTopLeftRadius: hp('1%'),
     borderTopRightRadius: hp('1%'),
@@ -28,6 +28,7 @@ export default StyleSheet.create({
   },
   leftColumn: {
     alignItems: 'center',
+    marginTop: wp('1%'),
   },
   rightColumn: {
     marginTop: wp('1%'),
@@ -44,7 +45,7 @@ export default StyleSheet.create({
   },
   image: {
     width: wp('25%'),
-    height: hp('10%'),
+    height: hp('12%'),
     borderRadius: 5,
   },
   postTitle: {
@@ -52,7 +53,6 @@ export default StyleSheet.create({
     color: '#000000',
     fontWeight: '600',
     textAlign: 'left',
-    width: wp('60%'),
     height: hp('8%'),
     marginLeft: wp('2%'),
   },
@@ -69,7 +69,7 @@ export default StyleSheet.create({
   subReddit: {
     fontSize: 12,
     fontWeight: 'bold',
-    color: Colors.primary,
+    color: Colors.green,
     marginLeft: wp('2%'),
   },
   timeText: {

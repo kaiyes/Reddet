@@ -28,12 +28,13 @@ class HomeFeedScreen extends Component {
     postTitle:
       'From Software Has Made sekiro which is about to come out in 2 weeks, Cant wait',
     sideColumn: true,
+    down: false,
   }
   componentDidMount() {
     console.log(this.state.sideColumn)
   }
   render() {
-    const { postTitle, sideColumn } = this.state
+    const { postTitle, sideColumn, down } = this.state
     const { navigate } = this.props.navigation
     return (
       <View style={styles.container}>
@@ -63,7 +64,13 @@ class HomeFeedScreen extends Component {
               <View style={styles.post}>
                 {sideColumn ? (
                   <View style={styles.leftColumn}>
-                    <TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this.setState({
+                          down: !down,
+                        })
+                      }}
+                    >
                       <Icon
                         name="caretup"
                         type="antdesign"
@@ -97,44 +104,67 @@ class HomeFeedScreen extends Component {
                 >
                   <View style={styles.postTitleContainer}>
                     <Image
-                      style={styles.image}
+                      style={
+                        sideColumn
+                          ? [
+                              styles.image,
+                              { marginBottom: hp('2%') },
+                            ]
+                          : [
+                              styles.image,
+                              { marginBottom: hp('.5%') },
+                            ]
+                      }
                       source={{
                         uri:
                           'https://speckyboy.com/wp-content/uploads/2014/07/flat_web_design_13.jpg',
                       }}
                     />
                     <View>
-                      <View style={styles.timeUserTribe}>
-                        <TouchableOpacity
-                          onPress={() => {
-                            console.log('avatar')
-                          }}
-                        >
-                          <Avatar
-                            rounded
-                            source={{
-                              uri:
-                                'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+                      {down ? null : (
+                        <View style={styles.timeUserTribe}>
+                          <TouchableOpacity
+                            onPress={() => {
+                              console.log('avatar')
                             }}
-                            activeOpacity={0.7}
-                            containerStyle={styles.avatar}
-                          />
-                        </TouchableOpacity>
-                        <TouchableOpacity
-                          onPress={() => {
-                            console.log('text')
-                          }}
-                        >
-                          <Text style={styles.subReddit}>
-                            r/Keyboard
+                          >
+                            <Avatar
+                              rounded
+                              source={{
+                                uri:
+                                  'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+                              }}
+                              activeOpacity={0.7}
+                              containerStyle={styles.avatar}
+                            />
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() => {
+                              console.log('text')
+                            }}
+                          >
+                            <Text style={styles.subReddit}>
+                              r/Keyboard
+                            </Text>
+                          </TouchableOpacity>
+                          <Text style={styles.timeText}>
+                            2 min ago
                           </Text>
-                        </TouchableOpacity>
-                        <Text style={styles.timeText}>
-                          2 min ago
-                        </Text>
-                      </View>
+                        </View>
+                      )}
+
                       <Text
-                        style={styles.postTitle}
+                        style={
+                          sideColumn
+                            ? [
+                                styles.postTitle,
+                                { width: wp('60%') },
+                              ]
+                            : [
+                                styles.postTitle,
+                                { width: wp('70%') },
+                              ]
+                        }
                         onPress={() => {
                           navigate('PostDetail')
                         }}
@@ -145,6 +175,37 @@ class HomeFeedScreen extends Component {
                               .substr(0, 70)}...`
                           : postTitle}
                       </Text>
+                      {down ? (
+                        <View style={styles.timeUserTribe}>
+                          <TouchableOpacity
+                            onPress={() => {
+                              console.log('avatar')
+                            }}
+                          >
+                            <Avatar
+                              rounded
+                              source={{
+                                uri:
+                                  'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+                              }}
+                              activeOpacity={0.7}
+                              containerStyle={styles.avatar}
+                            />
+                          </TouchableOpacity>
+                          <TouchableOpacity
+                            onPress={() => {
+                              console.log('text')
+                            }}
+                          >
+                            <Text style={styles.subReddit}>
+                              r/Keyboard
+                            </Text>
+                          </TouchableOpacity>
+                          <Text style={styles.timeText}>
+                            2 min ago
+                          </Text>
+                        </View>
+                      ) : null}
                     </View>
                   </View>
                   {sideColumn ? null : (
@@ -159,7 +220,7 @@ class HomeFeedScreen extends Component {
                         />
                       </TouchableOpacity>
                       <Text style={styles.commentText}>
-                        888
+                        12
                       </Text>
                       <TouchableOpacity style={styles.row}>
                         <Icon
