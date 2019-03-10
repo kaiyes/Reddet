@@ -14,7 +14,12 @@ class Header extends Component {
           onPress={this.props.onMenuPress}
           containerStyle={styles.menuIcon}
         />
-        <Text style={styles.headerText}>Socio</Text>
+        <Text
+          style={styles.headerText}
+          onPress={this.props.onHeaderPress}
+        >
+          Socio
+        </Text>
       </View>
     )
   }

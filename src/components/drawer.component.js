@@ -49,7 +49,7 @@ class Drawer extends Component {
             <View style={styles.nameHolder}>
               <View style={styles.row}>
                 <Text style={styles.authorText}>
-                  Kaiyes
+                  u/Kaiyes
                 </Text>
               </View>
               <View style={styles.badgeRow}>

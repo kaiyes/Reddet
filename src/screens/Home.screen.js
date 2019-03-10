@@ -3,15 +3,8 @@ import {
   StyleSheet,
   Text,
   View,
-  ActivityIndicator,
   TouchableOpacity,
   FlatList,
-  AsyncStorage,
-  Clipboard,
-  TextInput,
-  KeyboardAvoidingView,
-  Keyboard,
-  Modal,
   Image,
 } from 'react-native'
 import {
@@ -21,6 +14,10 @@ import {
   Button,
 } from 'react-native-elements'
 import _ from 'lodash'
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen'
 
 import styles from '../utils/styles/homeFeed.style'
 import Header from '../components/header.component'
@@ -28,39 +25,15 @@ import Colors from '../utils/Colors'
 
 class HomeFeedScreen extends Component {
   state = {
-    isModalVisible: false,
-    text: '',
-    reportId: '',
-    reasonForReporting: '',
-    isSecondModalVisible: false,
-    title: '',
-    excerpt: '',
-    tags: [],
-    alter: false,
-    tribe: '',
-    tribeId: '',
-    content: '',
-    searched: false,
-    pics: {},
-    tribeResult: [],
     postTitle:
       'From Software Has Made sekiro which is about to come out in 2 weeks, Cant wait',
+    sideColumn: true,
   }
-
+  componentDidMount() {
+    console.log(this.state.sideColumn)
+  }
   render() {
-    const {
-      title,
-      excerpt,
-      tags,
-      alter,
-      tribe,
-      tribeId,
-      tribeResult,
-      content,
-      searched,
-      pics,
-      postTitle,
-    } = this.state
+    const { postTitle, sideColumn } = this.state
     const { navigate } = this.props.navigation
     return (
       <View style={styles.container}>
@@ -68,8 +41,11 @@ class HomeFeedScreen extends Component {
           onMenuPress={() => {
             this.props.navigation.toggleDrawer()
           }}
-          onProfilePress={async () => {
-            console.log('profilePressed')
+          onHeaderPress={async () => {
+            await this.setState({
+              sideColumn: !sideColumn,
+            })
+            console.log(sideColumn)
           }}
         />
 
@@ -85,28 +61,40 @@ class HomeFeedScreen extends Component {
             onEndReachedThreshold={0.6}
             renderItem={() => (
               <View style={styles.post}>
-                <View style={styles.leftColumn}>
-                  <TouchableOpacity>
-                    <Icon
-                      name="caretup"
-                      type="antdesign"
-                      color={Colors.black}
-                      size={10}
-                      reverse
-                    />
-                  </TouchableOpacity>
-                  <Text style={styles.voteText}>12</Text>
-                  <TouchableOpacity>
-                    <Icon
-                      name="caretdown"
-                      type="antdesign"
-                      color={Colors.black}
-                      size={10}
-                      reverse
-                    />
-                  </TouchableOpacity>
-                </View>
-                <View style={styles.rightColumn}>
+                {sideColumn ? (
+                  <View style={styles.leftColumn}>
+                    <TouchableOpacity>
+                      <Icon
+                        name="caretup"
+                        type="antdesign"
+                        color={Colors.black}
+                        size={10}
+                        reverse
+                      />
+                    </TouchableOpacity>
+                    <Text style={styles.voteText}>12</Text>
+                    <TouchableOpacity>
+                      <Icon
+                        name="caretdown"
+                        type="antdesign"
+                        color={Colors.black}
+                        size={10}
+                        reverse
+                      />
+                    </TouchableOpacity>
+                  </View>
+                ) : null}
+
+                <View
+                  style={
+                    sideColumn
+                      ? [styles.rightColumn]
+                      : [
+                          styles.rightColumn,
+                          { marginLeft: wp('2.5%') },
+                        ]
+                  }
+                >
                   <View style={styles.postTitleContainer}>
                     <Image
                       style={styles.image}
@@ -116,38 +104,123 @@ class HomeFeedScreen extends Component {
                       }}
                     />
                     <View>
+                      <View style={styles.timeUserTribe}>
+                        <TouchableOpacity
+                          onPress={() => {
+                            console.log('avatar')
+                          }}
+                        >
+                          <Avatar
+                            rounded
+                            source={{
+                              uri:
+                                'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+                            }}
+                            activeOpacity={0.7}
+                            containerStyle={styles.avatar}
+                          />
+                        </TouchableOpacity>
+                        <TouchableOpacity
+                          onPress={() => {
+                            console.log('text')
+                          }}
+                        >
+                          <Text style={styles.subReddit}>
+                            r/Keyboard
+                          </Text>
+                        </TouchableOpacity>
+                        <Text style={styles.timeText}>
+                          2 min ago
+                        </Text>
+                      </View>
                       <Text
                         style={styles.postTitle}
                         onPress={() => {
                           navigate('PostDetail')
                         }}
                       >
-                        {postTitle.length > 60
+                        {postTitle.length > 80
                           ? `${postTitle
                               .toString()
-                              .substr(0, 50)}...`
+                              .substr(0, 70)}...`
                           : postTitle}
                       </Text>
-                      <View style={styles.timeUserTribe}>
-                        <Avatar
-                          rounded
-                          source={{
-                            uri:
-                              'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-                          }}
-                          activeOpacity={0.7}
-                          containerStyle={styles.avatar}
-                        />
-                        <Text style={styles.timeText}>
-                          2 min ago{' '}
-                          <Text style={styles.subReddit}>
-                            u/Keyboard
-                          </Text>
-                        </Text>
-                      </View>
                     </View>
                   </View>
-                  <View style={styles.bottomContainer} />
+                  {sideColumn ? null : (
+                    <View style={styles.bottomContainer}>
+                      <TouchableOpacity style={styles.row}>
+                        <Icon
+                          name="caretup"
+                          type="antdesign"
+                          color={Colors.lightGrey}
+                          size={14}
+                          containerStyle={styles.upIcon}
+                        />
+                      </TouchableOpacity>
+                      <Text style={styles.commentText}>
+                        888
+                      </Text>
+                      <TouchableOpacity style={styles.row}>
+                        <Icon
+                          name="caretdown"
+                          type="antdesign"
+                          color={Colors.lightGrey}
+                          size={14}
+                          containerStyle={styles.downIcon}
+                        />
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.row}>
+                        <Text style={styles.commentText}>
+                          888 comments
+                        </Text>
+                        <Icon
+                          name="comment"
+                          type="foundation"
+                          color={Colors.lightGrey}
+                          size={14}
+                          containerStyle={
+                            styles.commentIcon
+                          }
+                        />
+                      </TouchableOpacity>
+
+                      <TouchableOpacity style={styles.row}>
+                        <Text style={styles.commentText}>
+                          save
+                        </Text>
+                        <Icon
+                          name="save"
+                          type="entypo"
+                          color={Colors.lightGrey}
+                          size={14}
+                        />
+                      </TouchableOpacity>
+
+                      <TouchableOpacity style={styles.row}>
+                        <Text style={styles.commentText}>
+                          share
+                        </Text>
+                        <Icon
+                          name="md-share-alt"
+                          type="ionicon"
+                          color={Colors.lightGrey}
+                          size={14}
+                        />
+                      </TouchableOpacity>
+                      <TouchableOpacity style={styles.row}>
+                        <Text style={styles.commentText}>
+                          report
+                        </Text>
+                        <Icon
+                          name="report-problem"
+                          type="material"
+                          color={Colors.lightGrey}
+                          size={14}
+                        />
+                      </TouchableOpacity>
+                    </View>
+                  )}
                 </View>
               </View>
             )}
