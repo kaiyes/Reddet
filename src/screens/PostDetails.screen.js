@@ -70,7 +70,10 @@ export default class PostDetail extends Component {
             <Avatar
               small
               rounded
-              source={''}
+              source={{
+                uri:
+                  'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+              }}
               onPress={() => console.log('Works!')}
               activeOpacity={0.7}
               containerStyle={styles.avatar}
@@ -427,7 +430,8 @@ export default class PostDetail extends Component {
                             small
                             rounded
                             source={{
-                              uri: '',
+                              uri:
+                                'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
                             }}
                             onPress={() =>
                               console.log('Works!')

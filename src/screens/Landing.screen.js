@@ -1,15 +1,5 @@
 import React, { Component } from 'react'
-import {
-  StyleSheet,
-  Text,
-  View,
-  TextInput,
-  Dimensions,
-  Platform,
-  KeyboardAvoidingView,
-  ScrollView,
-  AsyncStorage,
-} from 'react-native'
+import { StyleSheet, Text, View, Image } from 'react-native'
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
@@ -24,6 +14,10 @@ export default class LandingScreen extends Component {
     return (
       <View style={styles.container}>
         <Text style={styles.heading}>Socio</Text>
+        <Image
+          source={require('../../assets/reddit.png')}
+          style={styles.image}
+        />
         <Divider style={styles.divider} />
         <Button
           title="Sign Up"
@@ -38,9 +32,7 @@ export default class LandingScreen extends Component {
           title="Log in"
           buttonStyle={styles.button}
           titleStyle={styles.buttonText}
-          onPress={() => {
-            navigate('Login')
-          }}
+          onPress={() => navigate('Login')}
         />
       </View>
     )
@@ -58,7 +50,7 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color: Colors.lightBlack,
     letterSpacing: -1,
-    marginTop: hp('15%'),
+    marginTop: hp('10%'),
   },
   secondHeading: {
     fontSize: 24,
@@ -87,18 +79,14 @@ const styles = StyleSheet.create({
     fontSize: 14,
   },
   divider: {
-    marginTop: hp('9%'),
+    marginTop: hp('1%'),
   },
   secondDivider: {
     marginTop: hp('1.5%'),
   },
-  termsText: {
-    fontSize: 12,
-    fontWeight: 'bold',
-    color: 'white',
-    marginTop: hp('4.5%'),
-    color: 'white',
-    textAlign: 'center',
-    textDecorationLine: 'underline',
+  image: {
+    width: wp('50%'),
+    height: hp('50%'),
+    resizeMode: 'contain',
   },
 })

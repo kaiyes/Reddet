@@ -6,6 +6,7 @@ import {
   TouchableOpacity,
   FlatList,
   Image,
+  AsyncStorage,
 } from 'react-native'
 import {
   Avatar,
@@ -25,16 +26,72 @@ import Colors from '../utils/Colors'
 
 class HomeFeedScreen extends Component {
   state = {
-    postTitle:
-      'From Software Has Made sekiro which is about to come out in 2 weeks, Cant wait',
     sideColumn: true,
     down: false,
+    postData: [
+      {
+        postTitle:
+          'From Software Has Made sekiro which is about to come out in 2 weeks, Cant wait',
+        postId: '001',
+        createdBy: 'melinda',
+        subReddit: 'r/freefolk',
+        time: '2 min',
+        vote: 12,
+        img:
+          'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+        postImage:
+          'https://speckyboy.com/wp-content/uploads/2014/07/flat_web_design_13.jpg',
+        comments: 93,
+      },
+      {
+        postTitle: 'Like this if you like that',
+        postId: '002',
+        createdBy: 'kaiyes',
+        subReddit: 'r/freefolk',
+        time: '1 hour',
+        vote: 122,
+        img:
+          'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+        postImage: 'https://i.redd.it/d2l95vvii8l21.jpg',
+        comments: 999,
+      },
+    ],
   }
-  componentDidMount() {
-    console.log(this.state.sideColumn)
+
+  _logout = async () => {
+    await AsyncStorage.removeItem('@userToken:token')
+    this.props.navigation.navigate('Auth')
   }
+
+  _upVote = async item => {
+    const newVote = this.state.postData.map(post => {
+      if (post.postId !== item) return post
+      return {
+        ...post,
+        vote: post.vote + 1,
+      }
+    })
+    this.setState({ postData: newVote })
+  }
+
+  _downVote = async item => {
+    const newVote = this.state.postData.map(post => {
+      if (post.postId !== item) return post
+      return {
+        ...post,
+        vote: post.vote - 1,
+      }
+    })
+    this.setState({ postData: newVote })
+  }
+  _subRedditBelow = async () => {
+    await this.setState({
+      down: !down,
+    })
+  }
+
   render() {
-    const { postTitle, sideColumn, down } = this.state
+    const { sideColumn, down, postData } = this.state
     const { navigate } = this.props.navigation
     return (
       <View style={styles.container}>
@@ -46,13 +103,13 @@ class HomeFeedScreen extends Component {
             await this.setState({
               sideColumn: !sideColumn,
             })
-            console.log(sideColumn)
           }}
         />
 
         <View style={styles.postContainer}>
           <FlatList
-            data={[1, 2]}
+            data={postData}
+            keyExtractor={item => item.postId}
             ItemSeparatorComponent={() => (
               <View style={styles.separator} />
             )}
@@ -60,15 +117,13 @@ class HomeFeedScreen extends Component {
               <View style={styles.separator} />
             )}
             onEndReachedThreshold={0.6}
-            renderItem={() => (
+            renderItem={({ item }) => (
               <View style={styles.post}>
                 {sideColumn ? (
                   <View style={styles.leftColumn}>
                     <TouchableOpacity
                       onPress={() => {
-                        this.setState({
-                          down: !down,
-                        })
+                        this._upVote(item.postId)
                       }}
                     >
                       <Icon
@@ -79,8 +134,19 @@ class HomeFeedScreen extends Component {
                         reverse
                       />
                     </TouchableOpacity>
-                    <Text style={styles.voteText}>12</Text>
-                    <TouchableOpacity>
+                    <Text
+                      style={styles.voteText}
+                      onPress={() => {
+                        this._logout()
+                      }}
+                    >
+                      {item.vote}
+                    </Text>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this._downVote(item.postId)
+                      }}
+                    >
                       <Icon
                         name="caretdown"
                         type="antdesign"
@@ -116,13 +182,17 @@ class HomeFeedScreen extends Component {
                             ]
                       }
                       source={{
-                        uri:
-                          'https://speckyboy.com/wp-content/uploads/2014/07/flat_web_design_13.jpg',
+                        uri: item.postImage,
                       }}
                     />
                     <View>
                       {down ? null : (
-                        <View style={styles.timeUserTribe}>
+                        <View
+                          style={[
+                            styles.timeUserTribe,
+                            { marginBottom: hp('1%') },
+                          ]}
+                        >
                           <TouchableOpacity
                             onPress={() => {
                               console.log('avatar')
@@ -131,8 +201,7 @@ class HomeFeedScreen extends Component {
                             <Avatar
                               rounded
                               source={{
-                                uri:
-                                  'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+                                uri: item.img,
                               }}
                               activeOpacity={0.7}
                               containerStyle={styles.avatar}
@@ -144,11 +213,11 @@ class HomeFeedScreen extends Component {
                             }}
                           >
                             <Text style={styles.subReddit}>
-                              r/Keyboard
+                              {item.subReddit}
                             </Text>
                           </TouchableOpacity>
                           <Text style={styles.timeText}>
-                            2 min ago
+                            {item.time} ago
                           </Text>
                         </View>
                       )}
@@ -169,14 +238,20 @@ class HomeFeedScreen extends Component {
                           navigate('PostDetail')
                         }}
                       >
-                        {postTitle.length > 80
-                          ? `${postTitle
+                        {item.postTitle.toString().length >
+                        80
+                          ? `${item.postTitle
                               .toString()
                               .substr(0, 70)}...`
-                          : postTitle}
+                          : item.postTitle.toString()}
                       </Text>
                       {down ? (
-                        <View style={styles.timeUserTribe}>
+                        <View
+                          style={[
+                            styles.timeUserTribe,
+                            { marginTop: hp('.5%') },
+                          ]}
+                        >
                           <TouchableOpacity
                             onPress={() => {
                               console.log('avatar')
@@ -185,8 +260,7 @@ class HomeFeedScreen extends Component {
                             <Avatar
                               rounded
                               source={{
-                                uri:
-                                  'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
+                                uri: item.postImage,
                               }}
                               activeOpacity={0.7}
                               containerStyle={styles.avatar}
@@ -198,11 +272,11 @@ class HomeFeedScreen extends Component {
                             }}
                           >
                             <Text style={styles.subReddit}>
-                              r/Keyboard
+                              {item.subReddit}
                             </Text>
                           </TouchableOpacity>
                           <Text style={styles.timeText}>
-                            2 min ago
+                            {item.time} ago
                           </Text>
                         </View>
                       ) : null}
@@ -210,7 +284,12 @@ class HomeFeedScreen extends Component {
                   </View>
                   {sideColumn ? null : (
                     <View style={styles.bottomContainer}>
-                      <TouchableOpacity style={styles.row}>
+                      <TouchableOpacity
+                        style={styles.row}
+                        onPress={() => {
+                          this._upVote(item.postId)
+                        }}
+                      >
                         <Icon
                           name="caretup"
                           type="antdesign"
@@ -220,9 +299,14 @@ class HomeFeedScreen extends Component {
                         />
                       </TouchableOpacity>
                       <Text style={styles.commentText}>
-                        12
+                        {item.vote}
                       </Text>
-                      <TouchableOpacity style={styles.row}>
+                      <TouchableOpacity
+                        style={styles.row}
+                        onPress={() => {
+                          this._downVote(item.postId)
+                        }}
+                      >
                         <Icon
                           name="caretdown"
                           type="antdesign"
@@ -233,7 +317,7 @@ class HomeFeedScreen extends Component {
                       </TouchableOpacity>
                       <TouchableOpacity style={styles.row}>
                         <Text style={styles.commentText}>
-                          888 comments
+                          {item.comments} comments
                         </Text>
                         <Icon
                           name="comment"

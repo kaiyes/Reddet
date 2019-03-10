@@ -420,7 +420,9 @@ class SignUpScreen extends Component {
             buttonStyle={styles.button}
             backgroundColor="#333333"
             textStyle={styles.buttonText}
-            onPress={this._login()}
+            onPress={() => {
+              this._login()
+            }}
           />
 
           <Text style={styles.forgotten}>

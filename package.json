@@ -21,6 +21,8 @@
     "react-native-responsive-screen": "^1.2.1",
     "react-native-swipeable": "^0.6.0",
     "react-navigation": "^3.3.2",
+    "react-redux": "^6.0.1",
+    "redux": "^4.0.1",
     "zxcvbn": "^4.4.2"
   },
   "devDependencies": {
