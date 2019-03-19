@@ -20,8 +20,9 @@ import {
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen'
 
-import styles from '../utils/styles/homeFeed.style'
-import Header from '../components/header.component'
+import styles from '../utils/styles/altHomefeed.style'
+import Header from '../components/altHeader.component'
+// import Header from '../components/header.component'
 import Colors from '../utils/Colors'
 
 class HomeFeedScreen extends Component {
@@ -33,7 +34,7 @@ class HomeFeedScreen extends Component {
         postTitle:
           'From Software Has Made sekiro which is about to come out in 2 weeks, Cant wait',
         postId: '001',
-        createdBy: 'melinda',
+        createdBy: 'kaiyes',
         subReddit: 'r/freefolk',
         time: '2 min',
         vote: 12,
@@ -46,13 +47,14 @@ class HomeFeedScreen extends Component {
       {
         postTitle: 'Like this if you like that',
         postId: '002',
-        createdBy: 'kaiyes',
+        createdBy: 'melinda',
         subReddit: 'r/freefolk',
         time: '1 hour',
         vote: 122,
         img:
           'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        postImage: 'https://i.redd.it/d2l95vvii8l21.jpg',
+        postImage:
+          'https://speckyboy.com/wp-content/uploads/2014/07/flat_web_design_13.jpg',
         comments: 999,
       },
     ],
@@ -120,253 +122,138 @@ class HomeFeedScreen extends Component {
             onEndReachedThreshold={0.6}
             renderItem={({ item }) => (
               <View style={styles.post}>
-                {sideColumn ? (
-                  <View style={styles.leftColumn}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        this._upVote(item.postId)
-                      }}
-                    >
-                      <Icon
-                        name="caretup"
-                        type="antdesign"
-                        color={Colors.black}
-                        size={10}
-                        reverse
-                      />
-                    </TouchableOpacity>
-                    <Text
-                      style={styles.voteText}
-                      onPress={() => {
-                        this._logout()
-                      }}
-                    >
-                      {item.vote}
-                    </Text>
-                    <TouchableOpacity
-                      onPress={() => {
-                        this._downVote(item.postId)
-                      }}
-                    >
-                      <Icon
-                        name="caretdown"
-                        type="antdesign"
-                        color={Colors.black}
-                        size={10}
-                        reverse
-                      />
-                    </TouchableOpacity>
-                  </View>
-                ) : null}
+                <View style={styles.leftColumn}>
+                  <TouchableOpacity
+                    onPress={this.props.upVote}
+                  >
+                    <Icon
+                      name="arrow-up-bold-outline"
+                      type="material-community"
+                      color={Colors.primary}
+                      size={16}
+                      reverse
+                      reverseColor={Colors.black}
+                      containerStyle={styles.iconShadow}
+                    />
+                  </TouchableOpacity>
+                  <Text
+                    style={styles.voteText}
+                    onPress={this.props.logOut}
+                  >
+                    {item.vote}
+                  </Text>
+                  <TouchableOpacity
+                    onPress={this.props.downVote}
+                  >
+                    <Icon
+                      name="arrow-down-bold-outline"
+                      type="material-community"
+                      color={Colors.primary}
+                      size={16}
+                      reverse
+                      reverseColor={Colors.black}
+                      containerStyle={styles.iconShadow}
+                    />
+                  </TouchableOpacity>
 
-                <View
-                  style={
-                    sideColumn
-                      ? [styles.rightColumn]
-                      : [
-                          styles.rightColumn,
-                          { marginLeft: wp('2.5%') },
-                        ]
-                  }
-                >
-                  <View style={styles.postTitleContainer}>
+                  <TouchableOpacity
+                    onPress={this.props.downVote}
+                  >
+                    <Icon
+                      name="arrow-down-bold-outline"
+                      type="material-community"
+                      color={Colors.primary}
+                      size={16}
+                      reverse
+                      reverseColor={Colors.black}
+                      containerStyle={styles.iconShadow}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={this.props.downVote}
+                  >
+                    <Icon
+                      name="arrow-down-bold-outline"
+                      type="material-community"
+                      color={Colors.primary}
+                      size={16}
+                      reverse
+                      reverseColor={Colors.black}
+                      containerStyle={styles.iconShadow}
+                    />
+                  </TouchableOpacity>
+                  <TouchableOpacity
+                    onPress={this.props.downVote}
+                  >
+                    <Icon
+                      name="arrow-down-bold-outline"
+                      type="material-community"
+                      color={Colors.primary}
+                      size={16}
+                      reverse
+                      reverseColor={Colors.black}
+                      containerStyle={styles.iconShadow}
+                    />
+                  </TouchableOpacity>
+                </View>
+                <View style={styles.rightColumn}>
+                  <View style={styles.imageContainer}>
                     <Image
-                      style={
-                        sideColumn
-                          ? [
-                              styles.image,
-                              { marginBottom: hp('2%') },
-                            ]
-                          : [
-                              styles.image,
-                              { marginBottom: hp('.5%') },
-                            ]
-                      }
+                      style={styles.image}
                       source={{
                         uri: item.postImage,
                       }}
                     />
-                    <View>
-                      {down ? null : (
-                        <View
-                          style={[
-                            styles.timeUserTribe,
-                            { marginBottom: hp('1%') },
-                          ]}
-                        >
-                          <TouchableOpacity
-                            onPress={() => {
-                              console.log('avatar')
-                            }}
-                          >
-                            <Avatar
-                              rounded
-                              source={{
-                                uri: item.img,
-                              }}
-                              activeOpacity={0.7}
-                              containerStyle={styles.avatar}
-                            />
-                          </TouchableOpacity>
-                          <TouchableOpacity
-                            onPress={() => {
-                              this._subRedditBelow()
-                            }}
-                          >
-                            <Text style={styles.subReddit}>
-                              {item.subReddit}
-                            </Text>
-                          </TouchableOpacity>
-                          <Text style={styles.timeText}>
-                            {item.time} ago
-                          </Text>
-                        </View>
-                      )}
-
-                      <Text
-                        style={
-                          sideColumn
-                            ? [
-                                styles.postTitle,
-                                { width: wp('60%') },
-                              ]
-                            : [
-                                styles.postTitle,
-                                { width: wp('70%') },
-                              ]
-                        }
-                        onPress={() => {
-                          navigate('PostDetail')
+                  </View>
+                  <Text style={styles.postTitle}>
+                    {item.postTitle}
+                  </Text>
+                  <View style={styles.timeUserTribe}>
+                    <TouchableOpacity
+                      onPress={() => {
+                        console.log('avatar')
+                      }}
+                    >
+                      <Avatar
+                        rounded
+                        source={{
+                          uri: item.img,
                         }}
-                      >
-                        {item.postTitle.toString().length >
-                        80
-                          ? `${item.postTitle
-                              .toString()
-                              .substr(0, 70)}...`
-                          : item.postTitle.toString()}
-                      </Text>
-                      {down ? (
-                        <View
-                          style={[
-                            styles.timeUserTribe,
-                            { marginTop: hp('.5%') },
-                          ]}
+                        activeOpacity={0.7}
+                      />
+                    </TouchableOpacity>
+                    <View>
+                      <View style={styles.row}>
+                        <Text style={styles.timeText}>
+                          by
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => {
+                            this._subRedditBelow()
+                          }}
                         >
-                          <TouchableOpacity
-                            onPress={() => {
-                              console.log('avatar')
-                            }}
-                          >
-                            <Avatar
-                              rounded
-                              source={{
-                                uri: item.postImage,
-                              }}
-                              activeOpacity={0.7}
-                              containerStyle={styles.avatar}
-                            />
-                          </TouchableOpacity>
-                          <TouchableOpacity
-                            onPress={() => {
-                              this._subRedditBelow()
-                            }}
-                          >
-                            <Text style={styles.subReddit}>
-                              {item.subReddit}
-                            </Text>
-                          </TouchableOpacity>
-                          <Text style={styles.timeText}>
-                            {item.time} ago
+                          <Text style={styles.username}>
+                            {item.createdBy}
                           </Text>
-                        </View>
-                      ) : null}
+                        </TouchableOpacity>
+                        <Text style={styles.timeText}>
+                          in
+                        </Text>
+                        <TouchableOpacity
+                          onPress={() => {
+                            this._subRedditBelow()
+                          }}
+                        >
+                          <Text style={styles.subReddit}>
+                            {item.subReddit}
+                          </Text>
+                        </TouchableOpacity>
+                      </View>
+                      <Text style={styles.timeText}>
+                        {item.time} ago
+                      </Text>
                     </View>
                   </View>
-                  {sideColumn ? null : (
-                    <View style={styles.bottomContainer}>
-                      <TouchableOpacity
-                        style={styles.row}
-                        onPress={() => {
-                          this._upVote(item.postId)
-                        }}
-                      >
-                        <Icon
-                          name="caretup"
-                          type="antdesign"
-                          color={Colors.lightGrey}
-                          size={14}
-                          containerStyle={styles.upIcon}
-                        />
-                      </TouchableOpacity>
-                      <Text style={styles.commentText}>
-                        {item.vote}
-                      </Text>
-                      <TouchableOpacity
-                        style={styles.row}
-                        onPress={() => {
-                          this._downVote(item.postId)
-                        }}
-                      >
-                        <Icon
-                          name="caretdown"
-                          type="antdesign"
-                          color={Colors.lightGrey}
-                          size={14}
-                          containerStyle={styles.downIcon}
-                        />
-                      </TouchableOpacity>
-                      <TouchableOpacity style={styles.row}>
-                        <Text style={styles.commentText}>
-                          {item.comments} comments
-                        </Text>
-                        <Icon
-                          name="comment"
-                          type="foundation"
-                          color={Colors.lightGrey}
-                          size={14}
-                          containerStyle={
-                            styles.commentIcon
-                          }
-                        />
-                      </TouchableOpacity>
-
-                      <TouchableOpacity style={styles.row}>
-                        <Text style={styles.commentText}>
-                          save
-                        </Text>
-                        <Icon
-                          name="save"
-                          type="entypo"
-                          color={Colors.lightGrey}
-                          size={14}
-                        />
-                      </TouchableOpacity>
-
-                      <TouchableOpacity style={styles.row}>
-                        <Text style={styles.commentText}>
-                          share
-                        </Text>
-                        <Icon
-                          name="md-share-alt"
-                          type="ionicon"
-                          color={Colors.lightGrey}
-                          size={14}
-                        />
-                      </TouchableOpacity>
-                      <TouchableOpacity style={styles.row}>
-                        <Text style={styles.commentText}>
-                          report
-                        </Text>
-                        <Icon
-                          name="report-problem"
-                          type="material"
-                          color={Colors.lightGrey}
-                          size={14}
-                        />
-                      </TouchableOpacity>
-                    </View>
-                  )}
                 </View>
               </View>
             )}
@@ -377,3 +264,413 @@ class HomeFeedScreen extends Component {
   }
 }
 export default HomeFeedScreen
+
+// <Image
+//   style={[
+//     styles.image,
+//     { marginBottom: hp('2%') },
+//   ]}
+//   source={{
+//     uri: item.postImage,
+//   }}
+// />
+
+// _renderFlatListOne = () => {
+//   const { postData } = this.state
+//   return (
+//     <FlatList
+//       data={postData}
+//       keyExtractor={item => item.postId}
+//       ItemSeparatorComponent={() => (
+//         <View style={styles.separator} />
+//       )}
+//       ItemSeparatorComponent={() => (
+//         <View style={styles.separator} />
+//       )}
+//       onEndReachedThreshold={0.6}
+//       renderItem={({ item }) => (
+//         <View style={styles.post}>
+//           <View style={styles.leftColumn}>
+//             <TouchableOpacity
+//               onPress={() => {
+//                 console.log('onpress works')
+//               }}
+//             >
+//               <Icon
+//                 name="caretup"
+//                 type="antdesign"
+//                 color={Colors.black}
+//                 size={10}
+//                 reverse
+//               />
+//             </TouchableOpacity>
+//             <Text
+//               style={styles.voteText}
+//               onPress={() => {
+//                 console.log('onpress works')
+//               }}
+//             >
+//               {item.vote}
+//             </Text>
+//             <TouchableOpacity
+//               onPress={this.props.downVote}
+//             >
+//               <Icon
+//                 name="caretdown"
+//                 type="antdesign"
+//                 color={Colors.black}
+//                 size={10}
+//                 reverse
+//               />
+//             </TouchableOpacity>
+//           </View>
+//           <View style={styles.rightColumn}>
+//             <View style={styles.postTitleContainer}>
+//               <Image
+//                 style={[
+//                   styles.image,
+//                   { marginBottom: hp('2%') },
+//                 ]}
+//                 source={{
+//                   uri: item.postImage,
+//                 }}
+//               />
+//             </View>
+//           </View>
+//         </View>
+//       )}
+//     />
+//   )
+// // }
+
+// ########################################
+// ########################################
+// ########################################
+
+// <FlatList
+//   data={postData}
+//   keyExtractor={item => item.postId}
+//   ItemSeparatorComponent={() => (
+//     <View style={styles.separator} />
+//   )}
+//   ItemSeparatorComponent={() => (
+//     <View style={styles.separator} />
+//   )}
+//   onEndReachedThreshold={0.6}
+//   renderItem={({ item }) => (
+//     <View style={styles.post}>
+//       {sideColumn ? (
+//         <View style={styles.leftColumn}>
+//           <TouchableOpacity
+//             onPress={() => {
+//               this._upVote(item.postId)
+//             }}
+//           >
+//             <Icon
+//               name="caretup"
+//               type="antdesign"
+//               color={Colors.black}
+//               size={10}
+//               reverse
+//             />
+//           </TouchableOpacity>
+//           <Text
+//             style={styles.voteText}
+//             onPress={() => {
+//               this._logout()
+//             }}
+//           >
+//             {item.vote}
+//           </Text>
+//           <TouchableOpacity
+//             onPress={() => {
+//               this._downVote(item.postId)
+//             }}
+//           >
+//             <Icon
+//               name="caretdown"
+//               type="antdesign"
+//               color={Colors.black}
+//               size={10}
+//               reverse
+//             />
+//           </TouchableOpacity>
+//         </View>
+//       ) : null}
+//
+//       <View
+//         style={
+//           sideColumn
+//             ? [styles.rightColumn]
+//             : [
+//                 styles.rightColumn,
+//                 { marginLeft: wp('2.5%') },
+//               ]
+//         }
+//       >
+//         <View style={styles.postTitleContainer}>
+//           <Image
+//             style={
+//               sideColumn
+//                 ? [
+//                     styles.image,
+//                     { marginBottom: hp('2%') },
+//                   ]
+//                 : [
+//                     styles.image,
+//                     { marginBottom: hp('.5%') },
+//                   ]
+//             }
+//             source={{
+//               uri: item.postImage,
+//             }}
+//           />
+//           <View>
+//             {down ? null : (
+//               <View
+//                 style={[
+//                   styles.timeUserTribe,
+//                   { marginBottom: hp('1%') },
+//                 ]}
+//               >
+//                 <TouchableOpacity
+//                   onPress={() => {
+//                     console.log('avatar')
+//                   }}
+//                 >
+//                   <Avatar
+//                     rounded
+//                     source={{
+//                       uri: item.img,
+//                     }}
+//                     activeOpacity={0.7}
+//                     containerStyle={styles.avatar}
+//                   />
+//                 </TouchableOpacity>
+//                 <TouchableOpacity
+//                   onPress={() => {
+//                     this._subRedditBelow()
+//                   }}
+//                 >
+//                   <Text style={styles.subReddit}>
+//                     {item.subReddit}
+//                   </Text>
+//                 </TouchableOpacity>
+//                 <Text style={styles.timeText}>
+//                   {item.time} ago
+//                 </Text>
+//               </View>
+//             )}
+//
+//             <Text
+//               style={
+//                 sideColumn
+//                   ? [
+//                       styles.postTitle,
+//                       { width: wp('60%') },
+//                     ]
+//                   : [
+//                       styles.postTitle,
+//                       { width: wp('70%') },
+//                     ]
+//               }
+//               onPress={() => {
+//                 navigate('PostDetail')
+//               }}
+//             >
+//               {item.postTitle.toString().length >
+//               80
+//                 ? `${item.postTitle
+//                     .toString()
+//                     .substr(0, 70)}...`
+//                 : item.postTitle.toString()}
+//             </Text>
+//             {down ? (
+//               <View
+//                 style={[
+//                   styles.timeUserTribe,
+//                   { marginTop: hp('.5%') },
+//                 ]}
+//               >
+//                 <TouchableOpacity
+//                   onPress={() => {
+//                     console.log('avatar')
+//                   }}
+//                 >
+//                   <Avatar
+//                     rounded
+//                     source={{
+//                       uri: item.postImage,
+//                     }}
+//                     activeOpacity={0.7}
+//                     containerStyle={styles.avatar}
+//                   />
+//                 </TouchableOpacity>
+//                 <TouchableOpacity
+//                   onPress={() => {
+//                     this._subRedditBelow()
+//                   }}
+//                 >
+//                   <Text style={styles.subReddit}>
+//                     {item.subReddit}
+//                   </Text>
+//                 </TouchableOpacity>
+//                 <Text style={styles.timeText}>
+//                   {item.time} ago
+//                 </Text>
+//               </View>
+//             ) : null}
+//           </View>
+//         </View>
+//         {sideColumn ? null : (
+//           <View style={styles.bottomContainer}>
+//             <TouchableOpacity
+//               style={styles.row}
+//               onPress={() => {
+//                 this._upVote(item.postId)
+//               }}
+//             >
+//               <Icon
+//                 name="caretup"
+//                 type="antdesign"
+//                 color={Colors.lightGrey}
+//                 size={14}
+//                 containerStyle={styles.upIcon}
+//               />
+//             </TouchableOpacity>
+//             <Text style={styles.commentText}>
+//               {item.vote}
+//             </Text>
+//             <TouchableOpacity
+//               style={styles.row}
+//               onPress={() => {
+//                 this._downVote(item.postId)
+//               }}
+//             >
+//               <Icon
+//                 name="caretdown"
+//                 type="antdesign"
+//                 color={Colors.lightGrey}
+//                 size={14}
+//                 containerStyle={styles.downIcon}
+//               />
+//             </TouchableOpacity>
+//             <TouchableOpacity style={styles.row}>
+//               <Text style={styles.commentText}>
+//                 {item.comments} comments
+//               </Text>
+//               <Icon
+//                 name="comment"
+//                 type="foundation"
+//                 color={Colors.lightGrey}
+//                 size={14}
+//                 containerStyle={
+//                   styles.commentIcon
+//                 }
+//               />
+//             </TouchableOpacity>
+//
+//             <TouchableOpacity style={styles.row}>
+//               <Text style={styles.commentText}>
+//                 save
+//               </Text>
+//               <Icon
+//                 name="save"
+//                 type="entypo"
+//                 color={Colors.lightGrey}
+//                 size={14}
+//               />
+//             </TouchableOpacity>
+//
+//             <TouchableOpacity style={styles.row}>
+//               <Text style={styles.commentText}>
+//                 share
+//               </Text>
+//               <Icon
+//                 name="md-share-alt"
+//                 type="ionicon"
+//                 color={Colors.lightGrey}
+//                 size={14}
+//               />
+//             </TouchableOpacity>
+//             <TouchableOpacity style={styles.row}>
+//               <Text style={styles.commentText}>
+//                 report
+//               </Text>
+//               <Icon
+//                 name="report-problem"
+//                 type="material"
+//                 color={Colors.lightGrey}
+//                 size={14}
+//               />
+//             </TouchableOpacity>
+//           </View>
+//         )}
+//       </View>
+//     </View>
+//   )}
+// />
+
+// ####################################################
+// ####################################################
+// ####################################################
+
+// <FlatList
+//   data={postData}
+//   keyExtractor={item => item.postId}
+//   ItemSeparatorComponent={() => (
+//     <View style={styles.separator} />
+//   )}
+//   ItemSeparatorComponent={() => (
+//     <View style={styles.separator} />
+//   )}
+//   onEndReachedThreshold={0.6}
+//   renderItem={({ item }) => (
+//     <View style={styles.post}>
+//       <View style={styles.leftColumn}>
+//         <TouchableOpacity
+//           onPress={this.props.upVote}
+//         >
+//           <Icon
+//             name="caretup"
+//             type="antdesign"
+//             color={Colors.black}
+//             size={10}
+//             reverse
+//           />
+//         </TouchableOpacity>
+//         <Text
+//           style={styles.voteText}
+//           onPress={this.props.logOut}
+//         >
+//           {item.vote}
+//         </Text>
+//         <TouchableOpacity
+//           onPress={this.props.downVote}
+//         >
+//           <Icon
+//             name="caretdown"
+//             type="antdesign"
+//             color={Colors.primary}
+//             size={10}
+//             reverse
+//             reverseColor={Colors.grey}
+//           />
+//         </TouchableOpacity>
+//       </View>
+//       <View style={styles.rightColumn}>
+//         <View style={styles.postTitleContainer}>
+//           <Image
+//             style={[
+//               styles.image,
+//               { marginBottom: hp('2%') },
+//             ]}
+//             source={{
+//               uri: item.postImage,
+//             }}
+//           />
+//         </View>
+//       </View>
+//     </View>
+//   )}
+// />
