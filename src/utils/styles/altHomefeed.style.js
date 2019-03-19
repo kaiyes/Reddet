@@ -8,20 +8,17 @@ import Colors from '../Colors'
 export default StyleSheet.create({
   container: {
     backgroundColor: Colors.primary,
-  },
-  postContainer: {
-    backgroundColor: Colors.primary,
-    marginTop: hp('2%'),
+    flex: 1,
   },
   separator: {
-    width: wp('98%'),
     height: hp('1%'),
   },
   post: {
     backgroundColor: Colors.primary,
     flexDirection: 'row',
-    borderBottomWidth: 2,
+    borderBottomWidth: hp('.2%'),
     borderBottomColor: Colors.white,
+    marginTop: hp('2%'),
   },
   leftColumn: {
     alignItems: 'center',

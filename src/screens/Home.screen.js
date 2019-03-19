@@ -24,40 +24,13 @@ import styles from '../utils/styles/altHomefeed.style'
 import Header from '../components/altHeader.component'
 // import Header from '../components/header.component'
 import Colors from '../utils/Colors'
+import PostData from '../utils/postData'
 
 class HomeFeedScreen extends Component {
   state = {
     sideColumn: true,
     down: false,
-    postData: [
-      {
-        postTitle:
-          'From Software Has Made sekiro which is about to come out in 2 weeks, Cant wait',
-        postId: '001',
-        createdBy: 'kaiyes',
-        subReddit: 'r/freefolk',
-        time: '2 min',
-        vote: 12,
-        img:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
-        postImage:
-          'https://speckyboy.com/wp-content/uploads/2014/07/flat_web_design_13.jpg',
-        comments: 93,
-      },
-      {
-        postTitle: 'Like this if you like that',
-        postId: '002',
-        createdBy: 'melinda',
-        subReddit: 'r/freefolk',
-        time: '1 hour',
-        vote: 122,
-        img:
-          'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-        postImage:
-          'https://speckyboy.com/wp-content/uploads/2014/07/flat_web_design_13.jpg',
-        comments: 999,
-      },
-    ],
+    postData: PostData,
   }
 
   _logout = async () => {
@@ -109,161 +82,157 @@ class HomeFeedScreen extends Component {
           }}
         />
 
-        <View style={styles.postContainer}>
-          <FlatList
-            data={postData}
-            keyExtractor={item => item.postId}
-            ItemSeparatorComponent={() => (
-              <View style={styles.separator} />
-            )}
-            ItemSeparatorComponent={() => (
-              <View style={styles.separator} />
-            )}
-            onEndReachedThreshold={0.6}
-            renderItem={({ item }) => (
-              <View style={styles.post}>
-                <View style={styles.leftColumn}>
-                  <TouchableOpacity
-                    onPress={this.props.upVote}
-                  >
-                    <Icon
-                      name="arrow-up-bold-outline"
-                      type="material-community"
-                      color={Colors.primary}
-                      size={16}
-                      reverse
-                      reverseColor={Colors.black}
-                      containerStyle={styles.iconShadow}
-                    />
-                  </TouchableOpacity>
-                  <Text
-                    style={styles.voteText}
-                    onPress={this.props.logOut}
-                  >
-                    {item.vote}
-                  </Text>
-                  <TouchableOpacity
-                    onPress={this.props.downVote}
-                  >
-                    <Icon
-                      name="arrow-down-bold-outline"
-                      type="material-community"
-                      color={Colors.primary}
-                      size={16}
-                      reverse
-                      reverseColor={Colors.black}
-                      containerStyle={styles.iconShadow}
-                    />
-                  </TouchableOpacity>
+        <FlatList
+          data={postData}
+          keyExtractor={item => item.postId}
+          onEndReachedThreshold={0.6}
+          renderItem={({ item }) => (
+            <View style={styles.post}>
+              <View style={styles.leftColumn}>
+                <TouchableOpacity
+                  onPress={this.props.upVote}
+                >
+                  <Icon
+                    name="arrow-up-bold-outline"
+                    type="material-community"
+                    color={Colors.primary}
+                    size={16}
+                    reverse
+                    reverseColor={Colors.black}
+                    containerStyle={styles.iconShadow}
+                  />
+                </TouchableOpacity>
+                <Text
+                  style={styles.voteText}
+                  onPress={this.props.logOut}
+                >
+                  {item.vote}
+                </Text>
+                <TouchableOpacity
+                  onPress={this.props.downVote}
+                >
+                  <Icon
+                    name="arrow-down-bold-outline"
+                    type="material-community"
+                    color={Colors.primary}
+                    size={16}
+                    reverse
+                    reverseColor={Colors.black}
+                    containerStyle={styles.iconShadow}
+                  />
+                </TouchableOpacity>
 
-                  <TouchableOpacity
-                    onPress={this.props.downVote}
-                  >
-                    <Icon
-                      name="arrow-down-bold-outline"
-                      type="material-community"
-                      color={Colors.primary}
-                      size={16}
-                      reverse
-                      reverseColor={Colors.black}
-                      containerStyle={styles.iconShadow}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={this.props.downVote}
-                  >
-                    <Icon
-                      name="arrow-down-bold-outline"
-                      type="material-community"
-                      color={Colors.primary}
-                      size={16}
-                      reverse
-                      reverseColor={Colors.black}
-                      containerStyle={styles.iconShadow}
-                    />
-                  </TouchableOpacity>
-                  <TouchableOpacity
-                    onPress={this.props.downVote}
-                  >
-                    <Icon
-                      name="arrow-down-bold-outline"
-                      type="material-community"
-                      color={Colors.primary}
-                      size={16}
-                      reverse
-                      reverseColor={Colors.black}
-                      containerStyle={styles.iconShadow}
-                    />
-                  </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={this.props.downVote}
+                >
+                  <Icon
+                    name="arrow-down-bold-outline"
+                    type="material-community"
+                    color={Colors.primary}
+                    size={16}
+                    reverse
+                    reverseColor={Colors.black}
+                    containerStyle={styles.iconShadow}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={this.props.downVote}
+                >
+                  <Icon
+                    name="arrow-down-bold-outline"
+                    type="material-community"
+                    color={Colors.primary}
+                    size={16}
+                    reverse
+                    reverseColor={Colors.black}
+                    containerStyle={styles.iconShadow}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity
+                  onPress={this.props.downVote}
+                >
+                  <Icon
+                    name="arrow-down-bold-outline"
+                    type="material-community"
+                    color={Colors.primary}
+                    size={16}
+                    reverse
+                    reverseColor={Colors.black}
+                    containerStyle={styles.iconShadow}
+                  />
+                </TouchableOpacity>
+              </View>
+              <View style={styles.rightColumn}>
+                <View style={styles.imageContainer}>
+                  <Image
+                    style={styles.image}
+                    source={{
+                      uri: item.postImage,
+                    }}
+                  />
                 </View>
-                <View style={styles.rightColumn}>
-                  <View style={styles.imageContainer}>
-                    <Image
-                      style={styles.image}
+                <Text style={styles.postTitle}>
+                  {item.postTitle}
+                </Text>
+                <View style={styles.timeUserTribe}>
+                  <TouchableOpacity
+                    onPress={() => {
+                      console.log('avatar')
+                    }}
+                  >
+                    <Avatar
+                      rounded
                       source={{
-                        uri: item.postImage,
+                        uri: item.img,
                       }}
+                      activeOpacity={0.7}
                     />
-                  </View>
-                  <Text style={styles.postTitle}>
-                    {item.postTitle}
-                  </Text>
-                  <View style={styles.timeUserTribe}>
-                    <TouchableOpacity
-                      onPress={() => {
-                        console.log('avatar')
-                      }}
-                    >
-                      <Avatar
-                        rounded
-                        source={{
-                          uri: item.img,
-                        }}
-                        activeOpacity={0.7}
-                      />
-                    </TouchableOpacity>
-                    <View>
-                      <View style={styles.row}>
-                        <Text style={styles.timeText}>
-                          by
-                        </Text>
-                        <TouchableOpacity
-                          onPress={() => {
-                            this._subRedditBelow()
-                          }}
-                        >
-                          <Text style={styles.username}>
-                            {item.createdBy}
-                          </Text>
-                        </TouchableOpacity>
-                        <Text style={styles.timeText}>
-                          in
-                        </Text>
-                        <TouchableOpacity
-                          onPress={() => {
-                            this._subRedditBelow()
-                          }}
-                        >
-                          <Text style={styles.subReddit}>
-                            {item.subReddit}
-                          </Text>
-                        </TouchableOpacity>
-                      </View>
+                  </TouchableOpacity>
+                  <View>
+                    <View style={styles.row}>
                       <Text style={styles.timeText}>
-                        {item.time} ago
+                        by
                       </Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this._subRedditBelow()
+                        }}
+                      >
+                        <Text style={styles.username}>
+                          {item.createdBy}
+                        </Text>
+                      </TouchableOpacity>
+                      <Text style={styles.timeText}>
+                        in
+                      </Text>
+                      <TouchableOpacity
+                        onPress={() => {
+                          this._subRedditBelow()
+                        }}
+                      >
+                        <Text style={styles.subReddit}>
+                          {item.subReddit}
+                        </Text>
+                      </TouchableOpacity>
                     </View>
+                    <Text style={styles.timeText}>
+                      {item.time} ago
+                    </Text>
                   </View>
                 </View>
               </View>
-            )}
-          />
-        </View>
+            </View>
+          )}
+        />
       </View>
     )
   }
 }
 export default HomeFeedScreen
+
+// ItemSeparatorComponent={() => (
+//   <View style={styles.separator} />
+// )}
 
 // <Image
 //   style={[
