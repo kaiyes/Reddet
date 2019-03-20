@@ -43,21 +43,9 @@ class Header extends Component {
                   />
                   <MenuOption
                     onSelect={() => {
-                      changeTheme('traditional2')
-                    }}
-                    text="traditional 2 Theme"
-                  />
-                  <MenuOption
-                    onSelect={() => {
                       changeTheme('moreTraditional')
                     }}
                     text="More traditional Theme"
-                  />
-                  <MenuOption
-                    onSelect={() => {
-                      changeTheme('moreTraditional2')
-                    }}
-                    text="More traditional 2 Theme"
                   />
                 </MenuOptions>
               </Menu>

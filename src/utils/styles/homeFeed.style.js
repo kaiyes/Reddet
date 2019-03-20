@@ -81,7 +81,7 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
-    marginTop: hp('1%'),
+    marginTop: hp('2%'),
     paddingTop: hp('.3%'),
     borderTopWidth: 0.3,
     borderTopColor:
