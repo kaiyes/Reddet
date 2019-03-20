@@ -22,16 +22,24 @@ export default StyleSheet.create({
   },
   leftColumn: {
     alignItems: 'center',
-    width: wp('25%'),
+    justifyContent: 'flex-start',
+    width: wp('22%'),
   },
   rightColumn: {
     alignItems: 'flex-start',
-    width: wp('75%'),
+    flex: 1,
+  },
+  iconContainer: {
+    position: 'absolute',
+    top: -7,
+    // backgroundColor: 'red',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
   },
   voteText: {
-    fontSize: 16,
-    color: '#555555',
-    fontWeight: '600',
+    fontSize: 12,
+    color: Colors.ultraLightGrey,
+    fontWeight: '200',
   },
   imageContainer: {
     shadowColor: '#000',

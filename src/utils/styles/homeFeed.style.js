@@ -18,7 +18,7 @@ export default StyleSheet.create({
     height: hp('1%'),
   },
   post: {
-    backgroundColor: Colors.white,
+    backgroundColor: Colors.primary,
     flexDirection: 'row',
     borderTopLeftRadius: hp('1%'),
     borderTopRightRadius: hp('1%'),
@@ -79,37 +79,24 @@ export default StyleSheet.create({
   },
   bottomContainer: {
     flexDirection: 'row',
-    justifyContent: 'flex-start',
+    justifyContent: 'space-between',
     alignItems: 'center',
-    marginBottom: hp('1%'),
-    marginTop: 10,
-    paddingTop: 5,
+    marginTop: hp('1%'),
+    paddingTop: hp('.3%'),
     borderTopWidth: 0.3,
     borderTopColor:
       Platform.OS === 'ios'
         ? Colors.ultraLightGrey
         : Colors.black,
-    width: wp('92%'),
+    width: wp('96%'),
   },
   commentText: {
     fontSize: 12,
     color: '#999999',
-    marginHorizontal: wp('1.5%'),
   },
   row: {
     flexDirection: 'row',
+    justifyContent: 'center',
     alignItems: 'center',
-  },
-  shareIcon: {
-    marginLeft: wp('2%'),
-  },
-  downIcon: {
-    marginBottom: hp('.3%'),
-  },
-  upIcon: {
-    marginTop: hp('.3%'),
-  },
-  commentIcon: {
-    marginTop: hp('.4%'),
   },
 })

@@ -10,31 +10,30 @@ export default StyleSheet.create({
     marginTop: hp('4%'),
     width: wp('100%'),
     backgroundColor: Colors.primary,
-    justifyContent: 'flex-start',
-    alignItems: 'flex-start',
     borderBottomWidth: 2,
     borderBottomColor: Colors.grey,
+  },
+  iconRow: {
+    flexDirection: 'row',
+    justifyContent: 'flex-end',
+    alignItems: 'center',
+    // backgroundColor: 'red',
+    marginHorizontal: wp('4%'),
+    marginTop: hp('.5%'),
   },
   headerText: {
     fontSize: 25,
     color: Colors.black,
     fontWeight: 'bold',
     letterSpacing: wp('.5%'),
-    marginLeft: wp('3.2%'),
+    marginLeft: wp('8%'),
     marginBottom: hp('1%'),
-    marginTop: hp('.5%'),
   },
-  profileIcon: {
-    marginRight: wp('2.5%'),
-  },
-  menuIcon: {
-    marginLeft: wp('3.2%'),
-  },
-  row: {
-    flexDirection: 'row',
+  menu: {
+    marginRight: wp('1%'),
+    marginBottom: hp('.3%'),
   },
 })
-
 // headerMiddleText: {
 //   fontSize: 16,
 //   color: Colors.lightBlack,
