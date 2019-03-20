@@ -2,6 +2,10 @@ import React, { Component } from 'react'
 import { Text, View } from 'react-native'
 import { Icon } from 'react-native-elements'
 import styles from '../utils/styles/altHeader.style'
+import {
+  widthPercentageToDP as wp,
+  heightPercentageToDP as hp,
+} from 'react-native-responsive-screen'
 import Colors from '../utils/Colors'
 import {
   Menu,
@@ -15,7 +19,7 @@ class Header extends Component {
   render() {
     return (
       <ThemeConsumer>
-        {({ changeTheme }) => (
+        {({ theme, changeTheme }) => (
           <View style={styles.header}>
             <View style={styles.iconRow}>
               <Menu>
@@ -57,7 +61,17 @@ class Header extends Component {
               />
             </View>
             <Text
-              style={styles.headerText}
+              style={[
+                styles.headerText,
+                {
+                  marginLeft:
+                    theme === 'traditional'
+                      ? wp('2%')
+                      : theme === 'cool'
+                      ? wp('8%')
+                      : wp('2%'),
+                },
+              ]}
               onPress={this.props.onHeaderPress}
             >
               News Feed

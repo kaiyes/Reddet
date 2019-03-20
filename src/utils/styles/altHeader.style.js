@@ -26,7 +26,6 @@ export default StyleSheet.create({
     color: Colors.black,
     fontWeight: 'bold',
     letterSpacing: wp('.5%'),
-    marginLeft: wp('8%'),
     marginBottom: hp('1%'),
   },
   menu: {
