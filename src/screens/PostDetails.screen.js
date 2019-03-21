@@ -7,14 +7,9 @@ import {
   ScrollView,
   TouchableOpacity,
   FlatList,
-  TouchableHighlight,
   Image,
   ImageBackground,
-  Platform,
   TextInput,
-  AsyncStorage,
-  WebView,
-  Dimensions,
 } from 'react-native'
 import {
   Avatar,
@@ -28,7 +23,6 @@ import {
   MenuOption,
   MenuTrigger,
 } from 'react-native-popup-menu'
-import Swipeable from 'react-native-swipeable'
 import { LinearGradient } from 'expo'
 import {
   widthPercentageToDP as wp,
@@ -60,6 +54,7 @@ export default class PostDetail extends Component {
       vote: this.state.vote - 1,
     })
   }
+
   render() {
     const {
       replyText,
@@ -72,16 +67,17 @@ export default class PostDetail extends Component {
       <ScrollView style={styles.container}>
         <ImageBackground
           style={styles.image}
-          source="https://speckyboy.com/wp-content/uploads/2014/07/flat_web_design_13.jpg"
+          source={{
+            uri:
+              'https://speckyboy.com/wp-content/uploads/2014/07/flat_web_design_13.jpg',
+          }}
         >
-          <LinearGradient
-            colors={['transparent', '#000000']}
-          >
+          <LinearGradient colors={['transparent', 'black']}>
             <View style={styles.timeContainer}>
               <Text style={styles.timeText}>
                 {PostData[0].time} ago in
               </Text>
-              <Text style={styles.tribeText}>
+              <Text style={styles.subReddit}>
                 {PostData[0].subReddit}
               </Text>
             </View>
@@ -92,7 +88,6 @@ export default class PostDetail extends Component {
             <View style={styles.smallVerticalGap} />
           </LinearGradient>
         </ImageBackground>
-
         <View style={styles.postContainer}>
           <View style={styles.userBox}>
             <View style={homeFeedStyle.timeUserTribe}>
@@ -145,14 +140,7 @@ export default class PostDetail extends Component {
             </TouchableOpacity>
           </View>
 
-          <View
-            style={[
-              homeFeedStyle.bottomContainer,
-              {
-                marginTop: hp('1%'),
-              },
-            ]}
-          >
+          <View style={styles.bottomContainer}>
             <TouchableOpacity
               style={homeFeedStyle.row}
               onPress={() => {
@@ -169,9 +157,7 @@ export default class PostDetail extends Component {
                 containerStyle={homeFeedStyle.iconShadow}
               />
             </TouchableOpacity>
-            <Text style={homeFeedStyle.commentText}>
-              {vote}
-            </Text>
+            <Text style={styles.upVoteText}>{vote}</Text>
             <TouchableOpacity
               style={homeFeedStyle.row}
               onPress={() => {
@@ -205,9 +191,7 @@ export default class PostDetail extends Component {
                 reverseColor={Colors.black}
                 containerStyle={homeFeedStyle.iconShadow}
               />
-              <Text style={homeFeedStyle.commentText}>
-                1k
-              </Text>
+              <Text style={styles.upVoteText}>1k</Text>
             </TouchableOpacity>
 
             <TouchableOpacity
@@ -227,9 +211,6 @@ export default class PostDetail extends Component {
                 reverseColor={Colors.black}
                 containerStyle={homeFeedStyle.iconShadow}
               />
-              <Text style={homeFeedStyle.commentText}>
-                save
-              </Text>
             </TouchableOpacity>
 
             <TouchableOpacity style={homeFeedStyle.row}>
@@ -245,8 +226,8 @@ export default class PostDetail extends Component {
             </TouchableOpacity>
             <TouchableOpacity style={homeFeedStyle.row}>
               <Icon
-                name="report-problem"
-                type="material"
+                name="flag-variant-outline"
+                type="material-community"
                 color={Colors.primary}
                 size={14}
                 reverse
@@ -257,145 +238,29 @@ export default class PostDetail extends Component {
           </View>
 
           <Text style={styles.postHightLightText}>
-            Gaming firm Razer has filed to go public through
-            an IPO in Hong Kong as it looks to raise more
-            than $600 million to go after growth
-            opportunities.
+            If you’re a fan of the Dark Souls series, you’ve
+            probably been keeping an eye out for Sekiro:
+            Shadows Die Twice, the latest FromSoftware
+            title. Well, we got it, and we’re here to break
+            it down. Watch me and Kotaku’s own Tim Rogers
+            put the game through its paces for an hour and a
+            half and answer some basic questions. How Dark
+            Souls-y is it? Will this appeal to Nioh mavens?
+            Will it still kick your butt? Tune in and find
+            out. Sekiro: Shadows Die Twice is out Friday for
+            PS4, Xbox, and PC.
           </Text>
-          <Text style={styles.postText}>
-            The U.S.-based company, which traces its origins
-            back to Singapore, filed initial paperwork on
-            Friday. Certain details — such as how much Razer
-            is looking to raise, its valuation and the
-            timing of the IPO — are not disclosed in the
-            345-page filing, but a source close to the
-            company confirms it’s likely to be upwards of
-            $600 million (earlier in the year, it looks like
-            Bloomberg reported $400 million). Razer’s last
-            round of venture capital investment valued the
-            firm at $2 billion.
-          </Text>
-          <View style={styles.quote}>
-            <Icon
-              name="quote-left"
-              type="font-awesome"
-              color="#000000"
-              size={20}
-            />
-          </View>
-          <Text style={styles.quoteHightLightText}>
-            Are you one of the thousands of Iphone owners
-            who has no idea that they can get free games for
-            their Iphone?
-          </Text>
-          <Text style={styles.postText}>aaa</Text>
-          <Text style={styles.headingText}>
-            You may be interested in
-          </Text>
-          <ScrollView
-            horizontal={true}
-            showsHorizontalScrollIndicator={false}
-          >
-            <View style={styles.card}>
-              <Text style={styles.smallHeaderText}>
-                svenskpolitik
-              </Text>
-              <Text style={styles.mainCardText}>
-                Park Rangr helps you avoid parking tickets
-                and find your car with AR
-              </Text>
-              <Text style={styles.cardTimeText}>
-                45 mins ago
-              </Text>
-            </View>
-            <View style={styles.whiteCard}>
-              <Text style={styles.blackSmallHeaderText}>
-                productivity
-              </Text>
-              <Text style={styles.blackCardMainText}>
-                Slack makes another 11 new investments in
-                its Slack fund
-              </Text>
-              <Text style={styles.blackCardTimeText}>
-                45 mins ago
-              </Text>
-            </View>
-          </ScrollView>
-          <View style={styles.quote}>
-            <Icon
-              name="quote-left"
-              type="font-awesome"
-              color="#000000"
-              size={20}
-            />
-          </View>
-          <Text style={styles.quoteHightLightText}>
-            We believe the THX business will improve our
-            ability to deliver premiere audiovisual products
-          </Text>
-          <View style={styles.verticalGap} />
         </View>
-        <Text style={styles.headingTextBlack}>
-          You may be interested in
-        </Text>
-        <View style={styles.gridBox}>
-          <View style={styles.cardWithourMargin}>
-            <Text style={styles.smallHeaderText}>
-              bicycling
-            </Text>
-            <Text style={styles.mainCardText}>
-              Gaming firm Razer seeks to raise over $600M in
-              Hong Kong IPO
-            </Text>
-            <Text style={styles.cardTimeText}>
-              45 mins ago
-            </Text>
-          </View>
-          <View style={styles.whiteCard}>
-            <Text style={styles.blackSmallHeaderText}>
-              PandR
-            </Text>
-            <Text style={styles.blackCardMainText}>
-              Careship raises $4M from Spark Capital to
-              address elderly care
-            </Text>
-            <Text style={styles.blackCardTimeText}>
-              45 mins ago
-            </Text>
-          </View>
-        </View>
-        <View style={styles.smallVerticalGap} />
-        <View style={styles.gridBox}>
-          <View style={styles.cardWithourMargin}>
-            <Text style={styles.smallHeaderText}>
-              bicycling
-            </Text>
-            <Text style={styles.mainCardText}>
-              Gaming firm Razer seeks to raise over $600M in
-              Hong Kong IPO
-            </Text>
-            <Text style={styles.cardTimeText}>
-              45 mins ago
-            </Text>
-          </View>
-          <View style={styles.whiteCard}>
-            <Text style={styles.blackSmallHeaderText}>
-              PandR
-            </Text>
-            <Text style={styles.blackCardMainText}>
-              Careship raises $4M from Spark Capital to
-              address elderly care
-            </Text>
-            <Text style={styles.blackCardTimeText}>
-              45 mins ago
-            </Text>
-          </View>
-        </View>
+
+        {/* ################# COMENTS Box ########################## */}
+        {/* ################# COMENTS Box ########################## */}
+        {/* ################# COMENTS Box ########################## */}
+
         <View style={styles.commentBox}>
           <View style={styles.smallVerticalGap} />
           <View style={styles.row}>
             <Text style={styles.commentNumber}>
-              shs h s h s
+              124 comments
             </Text>
             <Text style={styles.sortByText}>Sort by</Text>
             <Text style={styles.ratingText}>Top Rated</Text>

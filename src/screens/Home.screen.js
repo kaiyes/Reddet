@@ -60,7 +60,7 @@ class HomeFeedScreen extends Component {
     this.setState({ postData: newVote })
   }
 
-  _renderCoolFlat = () => {
+  _renderCool = () => {
     return (
       <FlatList
         data={this.state.postData}
@@ -164,7 +164,14 @@ class HomeFeedScreen extends Component {
                   }}
                 />
               </View>
-              <Text style={styles.postTitle}>
+              <Text
+                style={styles.postTitle}
+                onPress={() => {
+                  this.props.navigation.navigate(
+                    'PostDetail'
+                  )
+                }}
+              >
                 {item.postTitle.toString().length > 80
                   ? `${item.postTitle
                       .toString()
@@ -220,7 +227,7 @@ class HomeFeedScreen extends Component {
     )
   }
 
-  _renderFlatListOne = () => {
+  _renderTraditional = () => {
     return (
       <FlatList
         data={this.state.postData}
@@ -376,7 +383,7 @@ class HomeFeedScreen extends Component {
     )
   }
 
-  _renderFlatListFour = () => {
+  _renderCompact = () => {
     return (
       <FlatList
         data={this.state.postData}
@@ -493,13 +500,6 @@ class HomeFeedScreen extends Component {
                         987 Comments
                       </Text>
                     </TouchableOpacity>
-                    <Icon
-                      name="dot-single"
-                      type="entypo"
-                      color={Colors.ultraLightGrey}
-                      size={18}
-                      containerStyle={styles.dot}
-                    />
                   </View>
                 </View>
               </View>
@@ -590,6 +590,186 @@ class HomeFeedScreen extends Component {
     )
   }
 
+  _renderCompact2 = () => {
+    return (
+      <FlatList
+        data={this.state.postData}
+        keyExtractor={item => item.postId}
+        ItemSeparatorComponent={() => (
+          <View style={homeFeedStyle.separator} />
+        )}
+        ItemSeparatorComponent={() => (
+          <View style={homeFeedStyle.separator} />
+        )}
+        onEndReachedThreshold={0.6}
+        renderItem={({ item }) => (
+          <View style={homeFeedStyle.post}>
+            <View
+              style={[
+                homeFeedStyle.rightColumn,
+                { marginLeft: wp('2.5%') },
+              ]}
+            >
+              <View
+                style={homeFeedStyle.postTitleContainer}
+              >
+                <Image
+                  style={[
+                    homeFeedStyle.image,
+                    { marginBottom: hp('.5%') },
+                  ]}
+                  source={{
+                    uri: item.postImage,
+                  }}
+                />
+                <View>
+                  <View
+                    style={[
+                      homeFeedStyle.timeUserTribe,
+                      {
+                        marginBottom: hp('1%'),
+                      },
+                    ]}
+                  >
+                    <TouchableOpacity
+                      onPress={() => {
+                        console.log('avatar')
+                      }}
+                    >
+                      <Avatar
+                        rounded
+                        source={{
+                          uri: item.img,
+                        }}
+                        activeOpacity={0.7}
+                        containerStyle={[
+                          homeFeedStyle.avatar,
+                          {
+                            marginLeft: wp('2%'),
+                          },
+                        ]}
+                      />
+                    </TouchableOpacity>
+                    <TouchableOpacity
+                      onPress={() => {
+                        this._subRedditBelow()
+                      }}
+                    >
+                      <Text style={homeFeedStyle.subReddit}>
+                        {item.subReddit}
+                      </Text>
+                    </TouchableOpacity>
+                    <Text style={homeFeedStyle.timeText}>
+                      {item.time}
+                    </Text>
+                  </View>
+                  <Text
+                    style={[
+                      homeFeedStyle.postTitle,
+                      {
+                        width: wp('70%'),
+                        marginLeft: wp('2%'),
+                      },
+                    ]}
+                    onPress={() => {
+                      navigate('PostDetail')
+                    }}
+                  >
+                    {item.postTitle.toString().length > 80
+                      ? `${item.postTitle
+                          .toString()
+                          .substr(0, 70)}...`
+                      : item.postTitle.toString()}
+                  </Text>
+                </View>
+              </View>
+              <View style={styles.bottomContainer}>
+                <TouchableOpacity
+                  style={styles.row}
+                  onPress={() => {
+                    this._upVote(item.postId)
+                  }}
+                >
+                  <Icon
+                    name="caretup"
+                    type="antdesign"
+                    color={Colors.lightGrey}
+                    size={14}
+                    containerStyle={styles.upIcon}
+                  />
+                </TouchableOpacity>
+                <Text style={styles.commentText}>
+                  {item.vote}
+                </Text>
+                <TouchableOpacity
+                  style={styles.row}
+                  onPress={() => {
+                    this._downVote(item.postId)
+                  }}
+                >
+                  <Icon
+                    name="caretdown"
+                    type="antdesign"
+                    color={Colors.lightGrey}
+                    size={14}
+                    containerStyle={styles.downIcon}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.row}>
+                  <Text style={styles.commentText}>
+                    {item.comments} comments
+                  </Text>
+                  <Icon
+                    name="comment"
+                    type="foundation"
+                    color={Colors.lightGrey}
+                    size={14}
+                    containerStyle={styles.commentIcon}
+                  />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.row}>
+                  <Text style={styles.commentText}>
+                    save
+                  </Text>
+                  <Icon
+                    name="save"
+                    type="entypo"
+                    color={Colors.lightGrey}
+                    size={14}
+                  />
+                </TouchableOpacity>
+
+                <TouchableOpacity style={styles.row}>
+                  <Text style={styles.commentText}>
+                    share
+                  </Text>
+                  <Icon
+                    name="md-share-alt"
+                    type="ionicon"
+                    color={Colors.lightGrey}
+                    size={14}
+                  />
+                </TouchableOpacity>
+                <TouchableOpacity style={styles.row}>
+                  <Text style={styles.commentText}>
+                    report
+                  </Text>
+                  <Icon
+                    name="report-problem"
+                    type="material"
+                    color={Colors.lightGrey}
+                    size={14}
+                  />
+                </TouchableOpacity>
+              </View>
+            </View>
+          </View>
+        )}
+      />
+    )
+  }
+
   render() {
     const {
       sideColumn,
@@ -602,23 +782,16 @@ class HomeFeedScreen extends Component {
       <ThemeConsumer>
         {({ theme }) => (
           <View style={styles.container}>
-            <Header
-              onMenuPress={() => {
-                this.props.navigation.toggleDrawer()
-              }}
-              onHeaderPress={async () => {
-                await this.setState({
-                  design: 'cool' ? 'mine' : 'cool',
-                })
-              }}
-            />
+            <Header />
             {theme === 'cool'
-              ? this._renderCoolFlat()
+              ? this._renderCool()
               : theme === 'traditional'
-              ? this._renderFlatListOne()
-              : theme === 'moreTraditional'
-              ? this._renderFlatListFour()
-              : this._renderCoolFlat()}
+              ? this._renderTraditional()
+              : theme === 'compact'
+              ? this._renderCompact()
+              : theme === 'compact2'
+              ? this._renderCompact2()
+              : this._renderCool()}
           </View>
         )}
       </ThemeConsumer>

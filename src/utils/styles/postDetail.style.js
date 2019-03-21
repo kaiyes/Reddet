@@ -3,6 +3,7 @@ import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen'
+import Colors from '../Colors'
 
 export default StyleSheet.create({
   container: {
@@ -16,21 +17,15 @@ export default StyleSheet.create({
   image: {
     width: wp('100%'),
   },
-  timeContainer: {
-    flexDirection: 'row',
-    marginLeft: wp('1.9%'),
-    marginTop:
-      Platform.OS === 'ios' ? hp('30%') : hp('34%'),
-    marginLeft: wp('4.8%'),
-  },
   timeText: {
     fontSize: 12,
     color: 'white',
   },
-  tribeText: {
+  subReddit: {
     fontSize: 12,
     color: 'white',
     marginLeft: wp('.8%'),
+    fontWeight: 'bold',
   },
   headingText: {
     fontSize: 24,
@@ -47,13 +42,13 @@ export default StyleSheet.create({
     backgroundColor: '#ffffff',
     marginHorizontal: wp('2.5%'),
     borderRadius: 5,
-    marginTop: hp('1.7%'),
+    marginTop: hp('1%'),
   },
   userBox: {
-    height: hp('11%'),
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
+    marginTop: hp('2%'),
   },
   followButton: {
     backgroundColor: '#000000',
@@ -65,6 +60,41 @@ export default StyleSheet.create({
     marginRight: wp('2%'),
     marginBottom: hp('2%'),
   },
+  bottomContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: hp('1%'),
+    borderTopWidth: 0.3,
+    borderTopColor:
+      Platform.OS === 'ios'
+        ? Colors.ultraLightGrey
+        : Colors.black,
+  },
+  upVoteText: {
+    fontSize: 12,
+    color: '#999999',
+  },
+  postHightLightText: {
+    fontSize: 14,
+    color: '#999999',
+    marginHorizontal: wp('3%'),
+    textAlign: 'justify',
+    marginBottom: hp('2%'),
+  },
+  commentBox: {
+    backgroundColor: '#ffffff',
+    marginHorizontal: wp('2.5%'),
+    borderRadius: 5,
+    marginTop: hp('1.3%'),
+  },
+  timeContainer: {
+    flexDirection: 'row',
+    marginLeft: wp('1.9%'),
+    marginTop:
+      Platform.OS === 'ios' ? hp('30%') : hp('34%'),
+    marginLeft: wp('4.8%'),
+  },
   gridBox: {
     justifyContent: 'center',
     alignItems: 'center',
@@ -74,7 +104,6 @@ export default StyleSheet.create({
     backgroundColor: '#f0f0f0',
     height: hp('48%'),
   },
-
   avatar: {
     marginLeft: wp('3.5%'),
   },
@@ -157,12 +186,6 @@ export default StyleSheet.create({
     justifyContent: 'center',
     alignItems: 'center',
     marginLeft: wp('2%'),
-  },
-  postHightLightText: {
-    fontSize: 16,
-    color: '#999999',
-    marginHorizontal: wp('2%'),
-    textAlign: 'left',
   },
   quoteHightLightText: {
     fontSize: 16,
@@ -265,12 +288,6 @@ export default StyleSheet.create({
     marginTop: hp('3%'),
     marginBottom: hp('1.5%'),
     marginLeft: wp('2.6%'),
-  },
-  commentBox: {
-    backgroundColor: '#ffffff',
-    marginHorizontal: wp('2.5%'),
-    borderRadius: 5,
-    marginTop: hp('4.5%'),
   },
   commentNumber: {
     fontSize: 16,

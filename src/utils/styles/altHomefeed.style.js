@@ -95,20 +95,7 @@ export default StyleSheet.create({
     fontSize: 12,
     color: Colors.tintColor,
   },
-  bottomContainer: {
-    flexDirection: 'row',
-    justifyContent: 'flex-start',
-    alignItems: 'center',
-    marginBottom: hp('1%'),
-    marginTop: 10,
-    paddingTop: 5,
-    borderTopWidth: 0.3,
-    borderTopColor:
-      Platform.OS === 'ios'
-        ? Colors.ultraLightGrey
-        : Colors.black,
-    width: wp('92%'),
-  },
+
   commentText: {
     fontSize: 12,
     color: '#999999',
@@ -150,5 +137,19 @@ export default StyleSheet.create({
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
+  },
+  bottomContainer: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'center',
+    marginBottom: hp('1%'),
+    marginTop: hp('.5%'),
+    paddingTop: 5,
+    borderTopWidth: 0.3,
+    borderTopColor:
+      Platform.OS === 'ios'
+        ? Colors.ultraLightGrey
+        : Colors.black,
+    width: wp('92%'),
   },
 })

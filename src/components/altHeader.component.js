@@ -37,28 +37,28 @@ class Header extends Component {
                     onSelect={() => {
                       changeTheme('cool')
                     }}
-                    text="cool Theme"
+                    text="Cool "
                   />
                   <MenuOption
                     onSelect={() => {
                       changeTheme('traditional')
                     }}
-                    text="traditional Theme"
+                    text="Traditional "
                   />
                   <MenuOption
                     onSelect={() => {
-                      changeTheme('moreTraditional')
+                      changeTheme('compact')
                     }}
-                    text="More traditional Theme"
+                    text="Comapact "
+                  />
+                  <MenuOption
+                    onSelect={() => {
+                      changeTheme('compact2')
+                    }}
+                    text="Comapact 2 "
                   />
                 </MenuOptions>
               </Menu>
-              <Icon
-                name="menu"
-                type="material-community"
-                color={Colors.anotherGrey}
-                onPress={this.props.onMenuPress}
-              />
             </View>
             <Text
               style={[
@@ -72,7 +72,6 @@ class Header extends Component {
                       : wp('2%'),
                 },
               ]}
-              onPress={this.props.onHeaderPress}
             >
               News Feed
             </Text>
