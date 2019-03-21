@@ -33,10 +33,3 @@ export default StyleSheet.create({
     marginBottom: hp('.3%'),
   },
 })
-// headerMiddleText: {
-//   fontSize: 16,
-//   color: Colors.lightBlack,
-//   fontWeight: 'bold',
-//   letterSpacing: wp('1.7%'),
-//   marginLeft: wp('32%'),
-// },

@@ -29,12 +29,16 @@ import {
   MenuTrigger,
 } from 'react-native-popup-menu'
 import Swipeable from 'react-native-swipeable'
-import styles from '../utils/styles/postDetail.style'
 import { LinearGradient } from 'expo'
 import {
   widthPercentageToDP as wp,
   heightPercentageToDP as hp,
 } from 'react-native-responsive-screen'
+
+import styles from '../utils/styles/postDetail.style'
+import homeFeedStyle from '../utils/styles/altHomefeed.style'
+import PostData from '../utils/postData'
+import Colors from '../utils/Colors'
 
 export default class PostDetail extends Component {
   state = {
@@ -42,24 +46,48 @@ export default class PostDetail extends Component {
     replyText: '',
     touched: false,
     list: [1, 3, 4],
+    vote: 12,
   }
 
+  _upVote = () => {
+    this.setState({
+      vote: this.state.vote + 1,
+    })
+  }
+
+  _downVote = () => {
+    this.setState({
+      vote: this.state.vote - 1,
+    })
+  }
   render() {
-    const { replyText, commentText, touched } = this.state
+    const {
+      replyText,
+      commentText,
+      touched,
+      vote,
+    } = this.state
 
     return (
       <ScrollView style={styles.container}>
-        <ImageBackground style={styles.image} source={''}>
+        <ImageBackground
+          style={styles.image}
+          source="https://speckyboy.com/wp-content/uploads/2014/07/flat_web_design_13.jpg"
+        >
           <LinearGradient
             colors={['transparent', '#000000']}
           >
             <View style={styles.timeContainer}>
               <Text style={styles.timeText}>
-                14 min ago in
+                {PostData[0].time} ago in
               </Text>
-              <Text style={styles.tribeText}>news</Text>
+              <Text style={styles.tribeText}>
+                {PostData[0].subReddit}
+              </Text>
             </View>
-            <Text style={styles.headingText}>social</Text>
+            <Text style={styles.headingText}>
+              {PostData[0].postTitle}
+            </Text>
 
             <View style={styles.smallVerticalGap} />
           </LinearGradient>
@@ -67,40 +95,46 @@ export default class PostDetail extends Component {
 
         <View style={styles.postContainer}>
           <View style={styles.userBox}>
-            <Avatar
-              small
-              rounded
-              source={{
-                uri:
-                  'https://s3.amazonaws.com/uifaces/faces/twitter/ladylexy/128.jpg',
-              }}
-              onPress={() => console.log('Works!')}
-              activeOpacity={0.7}
-              containerStyle={styles.avatar}
-            />
-            <View style={styles.nameHolder}>
-              <View style={styles.row}>
-                <Text style={styles.authorText}>
-                  kaiyes
-                </Text>
-              </View>
-              <View style={styles.badgeRow}>
-                <View style={styles.firstBadge}>
-                  <View style={styles.innerBadge}>
-                    <Text style={styles.badgeText}>12</Text>
-                  </View>
+            <View style={homeFeedStyle.timeUserTribe}>
+              <TouchableOpacity
+                style={[
+                  homeFeedStyle.iconShadow,
+                  { marginLeft: wp('2%') },
+                ]}
+              >
+                <Avatar
+                  rounded
+                  source={{
+                    uri:
+                      'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
+                  }}
+                  activeOpacity={0.7}
+                />
+              </TouchableOpacity>
+              <View style={{ marginLeft: wp('1%') }}>
+                <View style={homeFeedStyle.row}>
+                  <Text style={homeFeedStyle.timeText}>
+                    by
+                  </Text>
+                  <TouchableOpacity>
+                    <Text style={homeFeedStyle.username}>
+                      u/kaiyes
+                    </Text>
+                  </TouchableOpacity>
+                  <Text style={homeFeedStyle.timeText}>
+                    in
+                  </Text>
                 </View>
-                <View style={styles.badge}>
-                  <View style={styles.innerBadge}>
-                    <Icon
-                      name="star"
-                      type="font-awesome"
-                      color="#d8d8d8"
-                      size={13}
-                    />
-                    <Text style={styles.badgeText}>OG</Text>
-                  </View>
-                </View>
+                <TouchableOpacity>
+                  <Text
+                    style={[
+                      homeFeedStyle.subReddit,
+                      { marginLeft: wp('1%') },
+                    ]}
+                  >
+                    r/kneeler
+                  </Text>
+                </TouchableOpacity>
               </View>
             </View>
 
@@ -110,55 +144,118 @@ export default class PostDetail extends Component {
               </Text>
             </TouchableOpacity>
           </View>
-          <View style={styles.iconsContainer}>
-            <TouchableOpacity style={styles.iconContainer}>
+
+          <View
+            style={[
+              homeFeedStyle.bottomContainer,
+              {
+                marginTop: hp('1%'),
+              },
+            ]}
+          >
+            <TouchableOpacity
+              style={homeFeedStyle.row}
+              onPress={() => {
+                this._upVote()
+              }}
+            >
               <Icon
-                name="arrow-up"
-                type="font-awesome"
-                color="#999999"
-                size={13}
+                name="caretup"
+                type="antdesign"
+                color={Colors.primary}
+                size={14}
+                reverse
+                reverseColor={Colors.black}
+                containerStyle={homeFeedStyle.iconShadow}
               />
             </TouchableOpacity>
-
-            <Text style={styles.voteText}>12</Text>
-            <TouchableOpacity style={styles.iconContainer}>
+            <Text style={homeFeedStyle.commentText}>
+              {vote}
+            </Text>
+            <TouchableOpacity
+              style={homeFeedStyle.row}
+              onPress={() => {
+                this._downVote()
+              }}
+            >
               <Icon
-                name="arrow-down"
-                type="font-awesome"
-                color="#999999"
-                size={13}
+                name="caretdown"
+                type="antdesign"
+                color={Colors.primary}
+                size={14}
+                reverse
+                reverseColor={Colors.black}
+                containerStyle={homeFeedStyle.iconShadow}
               />
             </TouchableOpacity>
-
-            <TouchableOpacity style={styles.comment}>
+            <TouchableOpacity
+              style={[
+                homeFeedStyle.row,
+                {
+                  alignItems: 'center',
+                },
+              ]}
+            >
               <Icon
                 name="comment"
-                type="font-awesome"
-                color="#999999"
-                size={13}
+                type="foundation"
+                color={Colors.primary}
+                size={14}
+                reverse
+                reverseColor={Colors.black}
+                containerStyle={homeFeedStyle.iconShadow}
               />
-            </TouchableOpacity>
-            <Text style={styles.voteText}>12</Text>
-
-            <TouchableOpacity style={styles.iconContainer}>
-              <Icon
-                name="bookmark"
-                type="font-awesome"
-                color="#999999"
-                size={13}
-              />
+              <Text style={homeFeedStyle.commentText}>
+                1k
+              </Text>
             </TouchableOpacity>
 
-            <Text style={styles.voteText}>12</Text>
-            <TouchableOpacity style={styles.iconContainer}>
+            <TouchableOpacity
+              style={[
+                homeFeedStyle.row,
+                {
+                  alignItems: 'center',
+                },
+              ]}
+            >
               <Icon
-                name="share-alt"
-                type="font-awesome"
-                color="#999999"
-                size={13}
+                name="save"
+                type="entypo"
+                color={Colors.primary}
+                size={14}
+                reverse
+                reverseColor={Colors.black}
+                containerStyle={homeFeedStyle.iconShadow}
+              />
+              <Text style={homeFeedStyle.commentText}>
+                save
+              </Text>
+            </TouchableOpacity>
+
+            <TouchableOpacity style={homeFeedStyle.row}>
+              <Icon
+                name="md-share-alt"
+                type="ionicon"
+                color={Colors.primary}
+                size={14}
+                reverse
+                reverseColor={Colors.black}
+                containerStyle={homeFeedStyle.iconShadow}
+              />
+            </TouchableOpacity>
+            <TouchableOpacity style={homeFeedStyle.row}>
+              <Icon
+                name="report-problem"
+                type="material"
+                color={Colors.primary}
+                size={14}
+                reverse
+                reverseColor={Colors.black}
+                containerStyle={homeFeedStyle.iconShadow}
               />
             </TouchableOpacity>
           </View>
+
           <Text style={styles.postHightLightText}>
             Gaming firm Razer has filed to go public through
             an IPO in Hong Kong as it looks to raise more
@@ -357,7 +454,8 @@ export default class PostDetail extends Component {
                     small
                     rounded
                     source={{
-                      uri: '',
+                      uri:
+                        'https://s3.amazonaws.com/uifaces/faces/twitter/adhamdannaway/128.jpg',
                     }}
                     activeOpacity={0.7}
                     containerStyle={styles.avatar}

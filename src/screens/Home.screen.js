@@ -30,10 +30,7 @@ import { ThemeConsumer } from '../utils/theme'
 
 class HomeFeedScreen extends Component {
   state = {
-    sideColumn: true,
-    down: false,
     postData: PostData,
-    design: 'cool',
   }
 
   _logout = async () => {
@@ -61,12 +58,6 @@ class HomeFeedScreen extends Component {
       }
     })
     this.setState({ postData: newVote })
-  }
-
-  _subRedditBelow = async () => {
-    await this.setState({
-      down: !this.state.down,
-    })
   }
 
   _renderCoolFlat = () => {
@@ -243,20 +234,17 @@ class HomeFeedScreen extends Component {
         onEndReachedThreshold={0.6}
         renderItem={({ item }) => (
           <View style={homeFeedStyle.post}>
-            <View style={homeFeedStyle.leftColumn}>
+            <View style={homeFeedStyle.leftColumn2}>
               <TouchableOpacity
                 onPress={() => {
                   this._upVote(item.postId)
                 }}
               >
                 <Icon
-                  name="caretup"
-                  type="antdesign"
-                  color={Colors.primary}
-                  size={10}
-                  reverse
-                  reverseColor={Colors.black}
-                  containerStyle={styles.iconShadow}
+                  name="arrow-up-bold-outline"
+                  type="material-community"
+                  color={Colors.ultraLightGrey}
+                  size={22}
                 />
               </TouchableOpacity>
               <Text
@@ -273,13 +261,10 @@ class HomeFeedScreen extends Component {
                 }}
               >
                 <Icon
-                  name="caretdown"
-                  type="antdesign"
-                  color={Colors.primary}
-                  size={10}
-                  reverse
-                  reverseColor={Colors.black}
-                  containerStyle={styles.iconShadow}
+                  name="arrow-down-bold-outline"
+                  type="material-community"
+                  color={Colors.ultraLightGrey}
+                  size={22}
                 />
               </TouchableOpacity>
             </View>
@@ -287,15 +272,6 @@ class HomeFeedScreen extends Component {
               <View
                 style={homeFeedStyle.postTitleContainer}
               >
-                <Image
-                  style={[
-                    homeFeedStyle.image,
-                    { marginBottom: hp('2%') },
-                  ]}
-                  source={{
-                    uri: item.postImage,
-                  }}
-                />
                 <View>
                   <View
                     style={[
@@ -303,22 +279,14 @@ class HomeFeedScreen extends Component {
                       { marginBottom: hp('1%') },
                     ]}
                   >
-                    <TouchableOpacity
-                      onPress={() => {
-                        console.log('avatar')
-                      }}
-                    >
-                      <Avatar
-                        rounded
-                        source={{
-                          uri: item.img,
-                        }}
-                        activeOpacity={0.7}
-                        containerStyle={
-                          homeFeedStyle.avatar
-                        }
-                      />
+                    <TouchableOpacity>
+                      <Text style={styles.username}>
+                        {item.createdBy}
+                      </Text>
                     </TouchableOpacity>
+                    <Text style={homeFeedStyle.pronoun}>
+                      in
+                    </Text>
                     <TouchableOpacity
                       onPress={() => {
                         this._subRedditBelow()
@@ -329,7 +297,7 @@ class HomeFeedScreen extends Component {
                       </Text>
                     </TouchableOpacity>
                     <Text style={homeFeedStyle.timeText}>
-                      {item.time} ago
+                      {item.time}
                     </Text>
                   </View>
 
@@ -342,13 +310,64 @@ class HomeFeedScreen extends Component {
                       navigate('PostDetail')
                     }}
                   >
-                    {item.postTitle.toString().length > 80
+                    {item.postTitle.toString().length > 65
                       ? `${item.postTitle
                           .toString()
-                          .substr(0, 70)}...`
+                          .substr(0, 50)}...`
                       : item.postTitle.toString()}
                   </Text>
+                  <View
+                    style={[
+                      styles.timeUserTribe,
+                      { marginTop: hp('1%') },
+                    ]}
+                  >
+                    <TouchableOpacity>
+                      <Text style={styles.timeText}>
+                        987 Comments
+                      </Text>
+                    </TouchableOpacity>
+                    <Icon
+                      name="dot-single"
+                      type="entypo"
+                      color={Colors.ultraLightGrey}
+                      size={18}
+                      containerStyle={styles.dot}
+                    />
+                    <TouchableOpacity>
+                      <Text style={styles.timeText}>
+                        save
+                      </Text>
+                    </TouchableOpacity>
+                    <Icon
+                      name="dot-single"
+                      type="entypo"
+                      color={Colors.ultraLightGrey}
+                      size={18}
+                      containerStyle={styles.dot}
+                    />
+                    <TouchableOpacity>
+                      <Icon
+                        name="flag-variant-outline"
+                        type="material-community"
+                        color={Colors.ultraLightGrey}
+                        size={15}
+                        containerStyle={styles.dot}
+                      />
+                    </TouchableOpacity>
+                  </View>
                 </View>
+                <Image
+                  style={[
+                    homeFeedStyle.image,
+                    {
+                      marginBottom: hp('2%'),
+                    },
+                  ]}
+                  source={{
+                    uri: item.postImage,
+                  }}
+                />
               </View>
             </View>
           </View>
@@ -393,7 +412,9 @@ class HomeFeedScreen extends Component {
                   <View
                     style={[
                       homeFeedStyle.timeUserTribe,
-                      { marginBottom: hp('1%') },
+                      {
+                        marginBottom: hp('1%'),
+                      },
                     ]}
                   >
                     <TouchableOpacity
@@ -407,9 +428,12 @@ class HomeFeedScreen extends Component {
                           uri: item.img,
                         }}
                         activeOpacity={0.7}
-                        containerStyle={
-                          homeFeedStyle.avatar
-                        }
+                        containerStyle={[
+                          homeFeedStyle.avatar,
+                          {
+                            marginLeft: wp('2%'),
+                          },
+                        ]}
                       />
                     </TouchableOpacity>
                     <TouchableOpacity
@@ -422,24 +446,61 @@ class HomeFeedScreen extends Component {
                       </Text>
                     </TouchableOpacity>
                     <Text style={homeFeedStyle.timeText}>
-                      {item.time} ago
+                      {item.time}
                     </Text>
                   </View>
                   <Text
                     style={[
                       homeFeedStyle.postTitle,
-                      { width: wp('70%') },
+                      {
+                        width: wp('70%'),
+                        marginLeft: wp('2%'),
+                      },
                     ]}
                     onPress={() => {
                       navigate('PostDetail')
                     }}
                   >
-                    {item.postTitle.toString().length > 80
+                    {item.postTitle.toString().length > 65
                       ? `${item.postTitle
                           .toString()
-                          .substr(0, 70)}...`
+                          .substr(0, 50)}...`
                       : item.postTitle.toString()}
                   </Text>
+                  <View
+                    style={[
+                      styles.timeUserTribe2,
+                      {
+                        marginTop: hp('.5%'),
+                        marginLeft: wp('1%'),
+                      },
+                    ]}
+                  >
+                    <TouchableOpacity>
+                      <Text style={styles.timeText}>
+                        {item.vote}
+                      </Text>
+                    </TouchableOpacity>
+                    <Icon
+                      name="dot-single"
+                      type="entypo"
+                      color={Colors.ultraLightGrey}
+                      size={18}
+                      containerStyle={styles.dot}
+                    />
+                    <TouchableOpacity>
+                      <Text style={styles.timeText}>
+                        987 Comments
+                      </Text>
+                    </TouchableOpacity>
+                    <Icon
+                      name="dot-single"
+                      type="entypo"
+                      color={Colors.ultraLightGrey}
+                      size={18}
+                      containerStyle={styles.dot}
+                    />
+                  </View>
                 </View>
               </View>
               <View style={homeFeedStyle.bottomContainer}>
@@ -459,9 +520,6 @@ class HomeFeedScreen extends Component {
                     containerStyle={styles.iconShadow}
                   />
                 </TouchableOpacity>
-                <Text style={homeFeedStyle.commentText}>
-                  {item.vote}
-                </Text>
                 <TouchableOpacity
                   style={homeFeedStyle.row}
                   onPress={() => {
@@ -488,9 +546,6 @@ class HomeFeedScreen extends Component {
                     reverseColor={Colors.black}
                     containerStyle={styles.iconShadow}
                   />
-                  <Text style={homeFeedStyle.commentText}>
-                    {item.comments}
-                  </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={homeFeedStyle.row}>
@@ -503,9 +558,6 @@ class HomeFeedScreen extends Component {
                     reverseColor={Colors.black}
                     containerStyle={styles.iconShadow}
                   />
-                  <Text style={homeFeedStyle.commentText}>
-                    save
-                  </Text>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={homeFeedStyle.row}>

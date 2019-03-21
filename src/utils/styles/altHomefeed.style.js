@@ -72,6 +72,11 @@ export default StyleSheet.create({
     justifyContent: 'flex-start',
     marginBottom: hp('2%'),
   },
+  timeUserTribe2: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    justifyContent: 'flex-start',
+  },
   avatar: {
     width: 20,
     height: 20,
@@ -125,6 +130,9 @@ export default StyleSheet.create({
   commentIcon: {
     marginTop: hp('.4%'),
   },
+  dot: {
+    marginTop: hp('.5%'),
+  },
   iconShadow: {
     shadowColor: '#000',
     shadowOffset: {
@@ -137,5 +145,10 @@ export default StyleSheet.create({
   },
   row: {
     flexDirection: 'row',
+  },
+  rowDefined: {
+    flexDirection: 'row',
+    justifyContent: 'center',
+    alignItems: 'center',
   },
 })

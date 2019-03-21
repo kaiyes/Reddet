@@ -29,14 +29,20 @@ export default StyleSheet.create({
   leftColumn: {
     alignItems: 'center',
     marginTop: wp('1%'),
+    marginLeft: wp('1.3%'),
+  },
+  leftColumn2: {
+    alignItems: 'center',
+    justifyContent: 'space-evenly',
+    marginHorizontal: wp('2%'),
   },
   rightColumn: {
     marginTop: wp('1%'),
   },
   voteText: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#555555',
-    fontWeight: '600',
+    fontWeight: '200',
   },
   postTitleContainer: {
     flexDirection: 'row',
@@ -53,12 +59,9 @@ export default StyleSheet.create({
     color: '#000000',
     fontWeight: '600',
     textAlign: 'left',
-    height: hp('8%'),
-    marginLeft: wp('2%'),
   },
   timeUserTribe: {
     flexDirection: 'row',
-    marginLeft: wp('2%'),
     alignItems: 'center',
     justifyContent: 'flex-start',
   },
@@ -70,12 +73,17 @@ export default StyleSheet.create({
     fontSize: 12,
     fontWeight: 'bold',
     color: Colors.green,
-    marginLeft: wp('2%'),
+    marginLeft: wp('1%'),
   },
   timeText: {
     fontSize: 12,
     color: '#999999',
-    marginHorizontal: wp('2%'),
+    marginHorizontal: wp('1%'),
+  },
+  pronoun: {
+    fontSize: 12,
+    color: '#999999',
+    marginLeft: wp('1%'),
   },
   bottomContainer: {
     flexDirection: 'row',
