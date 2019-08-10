@@ -21,7 +21,14 @@ class SignUpScreen extends Component {
 
     return (
       <View style={styles.rootContainer}>
-        <Text style={styles.textContainer}>settings</Text>
+        <Text
+          style={styles.textContainer}
+          onPress={() => {
+            navigate('ProfilePage')
+          }}
+        >
+          settings
+        </Text>
       </View>
     )
   }

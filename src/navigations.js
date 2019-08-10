@@ -26,6 +26,7 @@ import LoginScreen from './screens/Login.screen'
 import SignUpScreen from './screens/signUp.screen'
 import PostDetailScreen from './screens/PostDetails.screen'
 import SearchScreen from './screens/Search.screen'
+import ProfileScreen from './screens/profile.screen'
 
 import Colors from './utils/Colors'
 
@@ -157,6 +158,12 @@ const AppNavigator = createStackNavigator({
     navigationOptions: () => ({
       headerTransparent: true,
       headerTintColor: Colors.primary,
+    }),
+  },
+  ProfilePage: {
+    screen: ProfileScreen,
+    navigationOptions: () => ({
+      header: null,
     }),
   },
 })
